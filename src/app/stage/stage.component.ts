@@ -10,7 +10,11 @@ import { GoogleMap } from '@googlemaps/map-loader';
   selector: 'app-stage',
   template: `
   <div class="ml-3 stage-content" >
-  <div><a routerLink="./">info</a> <a routerLink="./participants">participants</a></div>
+  <div>
+    <div class="infos">
+      <a routerLink="./">info</a> 
+      <a routerLink="/stage/{{id}}/participants">participants</a></div>
+    </div>
     <h1>{{title | async}}</h1>
     <router-outlet (activate)="isParticipantVisible = true"
                    (deactivate)="isParticipantVisible = false; initMap()"
