@@ -1,10 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { stages } from './stages.mock';
 
 @Component({
   selector: 'app-root',
   template: `
   <nav class="nav sb">
-    <a class="nav-brand" href="">Second Try</a>
+    <a class="nav-brand" href="">{{title}}</a>
 
     <ul>
       <li><a href="#">Home</a></li>
@@ -16,15 +17,18 @@ import { Component } from '@angular/core';
 
   <div class="container center">
     <nav class="nav">
-      <li><a href="stage/1">1.posms</a></li>
-      <li><a href="stage/2">2.posms</a></li>
-      <li><a href="stage/3">3.posms</a></li>
+      <li *ngFor="let stage of stages"><a [href]="'stage/'+stage.id">{{stage.id}}.posms</a></li>
     </nav>
     <router-outlet style="display: none"></router-outlet>
   </div>
   `,
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent {
-  title = 'secondtry';
+export class AppComponent implements OnInit {
+  title = 'XC kauss';
+
+  stages = stages;
+  ngOnInit() {
+
+  }
 }
