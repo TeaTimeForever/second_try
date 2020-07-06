@@ -1,3 +1,11 @@
+.stage-content {
+  width: 70%;
+
+  .details {
+    display: flex;
+    justify-content: space-between;
+  }
+}
 #google_map {
   width: 300px;
   height: 300px;

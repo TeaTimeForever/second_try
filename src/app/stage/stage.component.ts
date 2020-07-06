@@ -9,13 +9,21 @@ import { GoogleMap } from '@googlemaps/map-loader';
 @Component({
   selector: 'app-stage',
   template: `
-  <div class="ml-3">
+  <div class="ml-3 stage-content" >
+  <div><a routerLink="./">info</a> <a routerLink="./participants">participants</a></div>
     <h1>{{title | async}}</h1>
-    <div class="text-container" [innerHtml]="description | async"> </div>
-
-    <div id="google_map"></div>
-    <div>{{stage.price}}</div>
-    <div>{{stage.date}}</div>
+    <router-outlet (activate)="isParticipantVisible = true"
+                   (deactivate)="isParticipantVisible = false; initMap()"
+                   style="display: none"></router-outlet>
+    <div *ngIf="!isParticipantVisible">
+      <div class="text-container" [innerHtml]="description | async"> </div>
+  
+      <div class="details">
+        <div id="google_map"></div>
+        <div>{{stage.price}}</div>
+        <div>{{stage.date}}</div>
+      </div>
+    </div>
   </div>
   `,
   styleUrls: ['./stage.component.scss']
@@ -26,26 +34,13 @@ export class StageComponent implements OnInit {
               private stageService: StageService,
               private sanitizer: DomSanitizer) { }
 
+  isParticipantVisible = false;
   id: any;
   description;
   title;
   stage;
-  async ngOnInit() {
-    const pathParams = this.activeRoute.snapshot.params;
-    this.id = (Object.keys(pathParams).length)? pathParams.id : '1';
 
-    const stagePost = this.stageService.getStageDescription(this.id);
-
-    this.description = stagePost
-      .then(res => res.html)
-      .then(res => this.sanitizer.bypassSecurityTrustHtml(res));
-
-    this.title = stagePost
-      .then(res => res.title)
-
-   this.stage = stages.find(s => s.id.toString() === this.id);
-
-
+  async initMap() {
     const mapOptions = {
       center: {
         lat: 56.649196,
@@ -78,8 +73,21 @@ export class StageComponent implements OnInit {
       animation: google.maps.Animation.DROP,
       position: mapOptions.center
     });
+  }
+  async ngOnInit() {
+    const pathParams = this.activeRoute.snapshot.params;
+    this.id = (Object.keys(pathParams).length)? pathParams.id : '1';
+    const stagePost = this.stageService.getStageDescription(this.id);
 
-    console.log(googleMap);
+    this.description = stagePost
+      .then(res => res.html)
+      .then(res => this.sanitizer.bypassSecurityTrustHtml(res));
+
+    this.title = stagePost
+      .then(res => res.title)
+
+    this.stage = stages.find(s => s.id.toString() === this.id);
+    await this.initMap()
   }
 
 }
