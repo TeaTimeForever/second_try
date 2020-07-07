@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { stages } from './stages.mock';
 import { UserService } from './user.service';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -8,12 +9,11 @@ import { UserService } from './user.service';
   <nav class="nav sb">
     <a class="nav-brand" href="">{{title}}</a>
     <ul>
-      <li><a href="#">Profile</a></li>
+      <li *ngIf="!!(user$ | async) === false"><button (click)="loginClicked$.next()" class="btn btn-5 mt-1">Login</button></li>
+      <li *ngIf="user$ | async">{{(user$| async).displayName}}</li>
+      <li *ngIf="user$ | async"><button (click)="logoutClicked$.next()" class="btn btn-5 mt-1">Logout</button></li>
     </ul>
-
-    user: {{user$ | async}}
   </nav>
-
   <div class="container center">
     <nav class="nav">
       <li *ngFor="let stage of stages">
@@ -30,11 +30,20 @@ import { UserService } from './user.service';
 export class AppComponent implements OnInit {
   title = 'XC kauss';
   stages = stages;
+  logoutClicked$ = new Subject();
+  loginClicked$ = new Subject();
 
   constructor(private userService: UserService) {}
 
   user$ = this.userService.user$;
   ngOnInit() {
 
+    this.loginClicked$.subscribe(async () => {
+      await this.userService.loginWithGoogle();
+    });
+
+    this.logoutClicked$.subscribe(async () => {
+      await this.userService.logout();
+    });
   }
 }
