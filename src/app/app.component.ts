@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { stages } from './stages.mock';
+import { UserService } from './user.service';
 
 @Component({
   selector: 'app-root',
@@ -9,6 +10,8 @@ import { stages } from './stages.mock';
     <ul>
       <li><a href="#">Profile</a></li>
     </ul>
+
+    user: {{user$ | async}}
   </nav>
 
   <div class="container center">
@@ -26,8 +29,11 @@ import { stages } from './stages.mock';
 })
 export class AppComponent implements OnInit {
   title = 'XC kauss';
-
   stages = stages;
+
+  constructor(private userService: UserService) {}
+
+  user$ = this.userService.user$;
   ngOnInit() {
 
   }
