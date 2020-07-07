@@ -9,11 +9,13 @@ import { GoogleMap } from '@googlemaps/map-loader';
 @Component({
   selector: 'app-stage',
   template: `
-  <div class="ml-3 stage-content" >
-  <div>
+<div class="ml-3 stage-content" >
+
+
+  <div class="description container center">
     <div class="infos">
       <a routerLink="./">info</a> 
-      <a routerLink="/stage/{{id}}/participants">participants</a></div>
+      <a routerLink="/stage/{{id}}/participants">participants</a>
     </div>
     <h1>{{title | async}}</h1>
     <router-outlet (activate)="isParticipantVisible = true"
@@ -24,11 +26,15 @@ import { GoogleMap } from '@googlemaps/map-loader';
   
       <div class="details">
         <div id="google_map"></div>
-        <div>{{stage.price}}</div>
-        <div>{{stage.date}}</div>
+        <div class="useful">
+          <div>Cena: {{stage.price}}</div>
+          <div>Datums: {{stage.date}}</div>
+          <div>Vieta: {{stage.place}}</div>
+        </div>
       </div>
     </div>
   </div>
+</div>
   `,
   styleUrls: ['./stage.component.scss']
 })

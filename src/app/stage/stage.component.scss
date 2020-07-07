@@ -1,9 +1,15 @@
 .stage-content {
-  width: 70%;
-
   .details {
+    margin-top: 1em;
     display: flex;
-    justify-content: space-between;
+    .useful {
+      display: flex;
+      flex-direction: column;
+      height: 300px;
+      div {
+        margin-bottom: 1em;
+      }
+    }
   }
 
   .infos {
@@ -12,10 +18,14 @@
       margin-right: 20px;
     }
   }
+  .description {
+    max-width: 800px;
+  }
 }
 #google_map {
   width: 300px;
   height: 300px;
+  margin-right: 1em;
 }
 #google_map_appended {
   height: 300px;
