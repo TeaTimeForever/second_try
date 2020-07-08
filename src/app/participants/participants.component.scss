@@ -1,0 +1,10 @@
+:host {
+  display: flex;
+  a {
+    height: max-content;
+  }
+  ::ng-deep .r-form {
+    border: none !important;
+    box-shadow: none !important;
+  }
+}
