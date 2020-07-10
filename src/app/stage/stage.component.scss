@@ -13,10 +13,12 @@
   .details {
     margin-top: 1em;
     display: flex;
+    @media only screen and (max-width: 600px) {
+      flex-flow: column-reverse;
+    }
     .info {
       display: flex;
       flex-direction: column;
-      height: 300px;
       div {
         margin-bottom: 1em;
       }

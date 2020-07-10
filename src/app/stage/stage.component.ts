@@ -22,7 +22,7 @@ import { GoogleMap } from '@googlemaps/map-loader';
                    style="display: none"></router-outlet>
     <div *ngIf="!isParticipantVisible">
       <div class="post" [innerHtml]="description | async"> </div>
-  
+
       <div class="details">
         <div id="google_map"></div>
         <div class="info">
