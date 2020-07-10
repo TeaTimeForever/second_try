@@ -1,11 +1,15 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { map, pluck, switchMap, distinctUntilChanged } from 'rxjs/operators';
 import { StageService } from '../stage.service';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { stages } from '../stages.mock';
 import { environment } from 'src/environments/environment';
 import { GoogleMap } from '@googlemaps/map-loader';
 import { Stage } from './stage.model';
+import { AngularFirestore } from '@angular/fire/firestore';
+
+const mapLoader = new GoogleMap();
 
 @Component({
   selector: 'app-stage',
@@ -39,10 +43,15 @@ import { Stage } from './stage.model';
   `,
   styleUrls: ['./stage.component.scss']
 })
-export class StageComponent implements OnInit {
+export class StageComponent implements OnInit, OnDestroy {
+  private stage$ = this.activeRoute.params.pipe(
+    distinctUntilChanged(({ year: pYear, id: pId }, { year, id }) => pYear === year && pId === id),
+    switchMap(({ year, id }) => this.afs.doc(`years/${year}/stages/${id}`).valueChanges())
+  )
 
   constructor(private activeRoute: ActivatedRoute,
     private stageService: StageService,
+    private afs: AngularFirestore,
     private sanitizer: DomSanitizer) { }
 
   isParticipantVisible = false;
@@ -50,6 +59,8 @@ export class StageComponent implements OnInit {
   description?: Promise<SafeHtml>;
   title?: Promise<string>;
   stage?: Stage;
+
+  map?: google.maps.Map
 
   async initMap() {
     const mapOptions = {
@@ -72,8 +83,6 @@ export class StageComponent implements OnInit {
       mapOptions: mapOptions,
       apiOptions: apiOptions
     };
-
-    const mapLoader = new GoogleMap();
 
     // Load the map
     const googleMap = await mapLoader.initMap(mapLoaderOptions);
@@ -99,6 +108,12 @@ export class StageComponent implements OnInit {
 
     this.stage = stages[0];
     await this.initMap()
+  }
+
+  ngOnDestroy() {
+    if (this.map) {
+      this.map.unbindAll()
+    }
   }
 
 }

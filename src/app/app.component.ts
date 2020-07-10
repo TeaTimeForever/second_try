@@ -18,10 +18,10 @@ import { Stage } from './stage/stage.model';
   </nav>
   <div class="container center">
     <nav class="nav">
-      <li *ngFor="let stage of $stages | async">
+      <li *ngFor="let stage of stages$ | async">
         <a [ngClass]="{blink: stage.status === 'ongoing',
                        disabled: stage.status === 'announced'}"
-           [href]="'stage/' + '/' + year + '/' + stage.id">{{stage.nr}}. posms</a>
+           [href]="'stage/' + year + '/' + stage.id">{{stage.nr}}. posms</a>
       </li>
     </nav>
     <router-outlet style="display: none"></router-outlet>
@@ -31,7 +31,6 @@ import { Stage } from './stage/stage.model';
 })
 export class AppComponent implements OnInit {
   title = 'XC kauss';
-  stages = stages;
   logoutClicked$ = new Subject();
   loginClicked$ = new Subject();
   year = new Date().getFullYear();
@@ -40,8 +39,8 @@ export class AppComponent implements OnInit {
 
   user$ = this.userService.user$;
   stages$ = this.afs.collection<Stage>(`years/${this.year}/stages`, q => q.orderBy('nr', 'asc')).valueChanges({ idField: 'id' })
-  ngOnInit() {
 
+  ngOnInit() {
     this.loginClicked$.subscribe(async () => {
       await this.userService.loginWithGoogle();
     });
