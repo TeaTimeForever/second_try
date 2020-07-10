@@ -11,8 +11,8 @@ import { GoogleMap } from '@googlemaps/map-loader';
   template: `
 <div class="stage-content" >
 
-  <div class="description container center">
-    <div class="infos">
+  <div class="container center">
+    <div class="links">
       <a routerLink="./">info</a> 
       <a routerLink="/stage/{{id}}/participants">participants</a>
     </div>
@@ -25,7 +25,7 @@ import { GoogleMap } from '@googlemaps/map-loader';
   
       <div class="details">
         <div id="google_map"></div>
-        <div class="useful">
+        <div class="info">
           <div>Cena: {{stage.price}}</div>
           <div>Datums: {{stage.date}}</div>
           <div>Vieta: {{stage.place}}</div>

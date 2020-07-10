@@ -1,9 +1,19 @@
 .stage-content {
   margin: 0 1em;
+  .links {
+    display: flex;
+    a {
+      margin-right: 20px;
+    }
+  }
+  .post {
+    padding: 2em 1em;
+    background-color: #f8f8f8;
+  }
   .details {
     margin-top: 1em;
     display: flex;
-    .useful {
+    .info {
       display: flex;
       flex-direction: column;
       height: 300px;
@@ -12,18 +22,7 @@
       }
     }
   }
-  .post {
-    padding: 2em 1em;
-    background-color: #f8f8f8;
-  }
-
-  .infos {
-    display: flex;
-    a {
-      margin-right: 20px;
-    }
-  }
-  .description {
+  .container {
     max-width: 800px;
   }
 }
