@@ -3,10 +3,12 @@ import { Routes, RouterModule } from '@angular/router';
 import { StageComponent } from './stage/stage.component';
 import { ParticipantsComponent } from './participants/participants.component';
 import { JoinComponent } from './join/join.component';
+import { RegulationsComponent } from './regulations/regulations.component';
 
 
 const routes: Routes = [
   {path: '', component: StageComponent},
+  {path: 'regulations', component: RegulationsComponent},
   {path: 'stage/:id', component: StageComponent, children: [
     {path: 'participants', component: ParticipantsComponent, children: [
       {path: 'join', component: JoinComponent}

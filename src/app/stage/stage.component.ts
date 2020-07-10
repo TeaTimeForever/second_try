@@ -9,8 +9,7 @@ import { GoogleMap } from '@googlemaps/map-loader';
 @Component({
   selector: 'app-stage',
   template: `
-<div class="ml-3 stage-content" >
-
+<div class="stage-content" >
 
   <div class="description container center">
     <div class="infos">
@@ -22,7 +21,7 @@ import { GoogleMap } from '@googlemaps/map-loader';
                    (deactivate)="isParticipantVisible = false; initMap()"
                    style="display: none"></router-outlet>
     <div *ngIf="!isParticipantVisible">
-      <div class="text-container" [innerHtml]="description | async"> </div>
+      <div class="post" [innerHtml]="description | async"> </div>
   
       <div class="details">
         <div id="google_map"></div>

@@ -10,13 +10,17 @@ import { StageComponent } from './stage/stage.component';
 import { ParticipantsComponent } from './participants/participants.component';
 import { environment } from 'src/environments/environment';
 import { JoinComponent } from './join/join.component';
+import { RehulationsComponent } from './rehulations/rehulations.component';
+import { RegulationsComponent } from './regulations/regulations.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     StageComponent,
     ParticipantsComponent,
-    JoinComponent
+    JoinComponent,
+    RehulationsComponent,
+    RegulationsComponent
   ],
   imports: [
     BrowserModule,

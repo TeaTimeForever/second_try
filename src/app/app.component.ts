@@ -16,6 +16,7 @@ import { Subject } from 'rxjs';
   </nav>
   <div class="container center">
     <nav class="nav">
+      <li><a href="regulations">Nolikums</a></li>
       <li *ngFor="let stage of stages">
         <a [ngClass]="{blink: stage.status === 'ongoing',
                        disabled: stage.status === 'announced'}"
