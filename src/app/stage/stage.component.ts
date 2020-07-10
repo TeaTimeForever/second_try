@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { StageService } from '../stage.service';
-import { DomSanitizer } from '@angular/platform-browser';
+import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { stages } from '../stages.mock';
 import { environment } from 'src/environments/environment';
 import { GoogleMap } from '@googlemaps/map-loader';
+import { Stage } from './stage.model';
 
 @Component({
   selector: 'app-stage',
@@ -41,14 +42,14 @@ import { GoogleMap } from '@googlemaps/map-loader';
 export class StageComponent implements OnInit {
 
   constructor(private activeRoute: ActivatedRoute,
-              private stageService: StageService,
-              private sanitizer: DomSanitizer) { }
+    private stageService: StageService,
+    private sanitizer: DomSanitizer) { }
 
   isParticipantVisible = false;
-  id: any;
-  description;
-  title;
-  stage;
+  id?: string;
+  description?: Promise<SafeHtml>;
+  title?: Promise<string>;
+  stage?: Stage;
 
   async initMap() {
     const mapOptions = {
@@ -58,7 +59,7 @@ export class StageComponent implements OnInit {
       },
       zoom: 8
     }
-    
+
     const apiOptions = {
       version: 'weekly',
       libraries: ['places']
@@ -73,7 +74,7 @@ export class StageComponent implements OnInit {
     };
 
     const mapLoader = new GoogleMap();
- 
+
     // Load the map
     const googleMap = await mapLoader.initMap(mapLoaderOptions);
 
@@ -86,17 +87,17 @@ export class StageComponent implements OnInit {
   }
   async ngOnInit() {
     const pathParams = this.activeRoute.snapshot.params;
-    this.id = (Object.keys(pathParams).length)? pathParams.id : '1';
-    const stagePost = this.stageService.getStageDescription(this.id);
+    this.id = (Object.keys(pathParams).length) ? pathParams.id : '1';
+    const stagePost = this.stageService.getStageDescription(this.id!);
 
     this.description = stagePost
       .then(res => res.html)
-      .then(res => this.sanitizer.bypassSecurityTrustHtml(res));
+      .then(res => this.sanitizer.bypassSecurityTrustHtml(res!));
 
     this.title = stagePost
-      .then(res => res.title)
+      .then(res => res.title!)
 
-    this.stage = stages.find(s => s.id.toString() === this.id);
+    this.stage = stages[0];
     await this.initMap()
   }
 

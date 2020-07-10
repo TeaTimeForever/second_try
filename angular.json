@@ -124,6 +124,10 @@
           }
         }
       }
-    }},
-  "defaultProject": "secondtry"
+    }
+  },
+  "defaultProject": "secondtry",
+  "cli": {
+    "analytics": "42cf9a70-ffe5-4355-89c1-6a3e601334ef"
+  }
 }
