@@ -34,19 +34,21 @@ const mapLoaderOptions: MapLoaderOptions = {
   template: `
 <div class="stage-content" >
 
-  <div class="container center">
+  <div class="container center" *ngIf="stage$ | async as stage">
     <div class="links">
       <a routerLink="./">info</a> 
       <a [routerLink]="['participants']">participants</a>
+      <div *ngIf="stage.status ==='ongoing'" class="registration">Notiek reģistrācija</div>
+      <div *ngIf="stage.status ==='cancelled'" class="cancelled">Atcelts</div>
     </div>
     <h1>{{title$ | async}}</h1>
     <router-outlet style="display: none"></router-outlet>
     <div *ngIf="!isParticipantVisible">
       <div class="post" [innerHtml]="description$ | async"></div>
 
-      <div class="details">
+      <div class="details" *ngIf="stage.status !=='cancelled'">
         <div id="google_map"></div>
-        <div class="info" *ngIf="stage$ | async as stage">
+        <div class="info" >
           <div>Cena: {{stage.fee}}</div>
           <div>Datums: {{formatDate(stage.date)}}</div>
           <div>Vieta: {{stage.place}}</div>

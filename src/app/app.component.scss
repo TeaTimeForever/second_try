@@ -18,6 +18,10 @@
     opacity: 0.6;
   }
 
+  .cancelled {
+    text-decoration: line-through;
+  }
+  
   .blink {
     animation: blink-animation 3s steps(5, start) infinite;
     -webkit-animation: blink-animation 1s steps(5, start) infinite;

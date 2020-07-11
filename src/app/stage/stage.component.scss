@@ -2,8 +2,19 @@
   margin: 0 1em;
   .links {
     display: flex;
+    align-items: baseline;
     a {
       margin-right: 20px;
+    }
+    .registration {
+      font-weight: 800;
+      font-size: 0.8em;
+      color: forestgreen;
+    }
+    .cancelled {
+      font-weight: 800;
+      font-size: 0.8em;
+      color: crimson;
     }
   }
   .post {
