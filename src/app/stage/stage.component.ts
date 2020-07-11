@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router, ChildActivationEnd } from '@angular/router';
 import { Subject } from 'rxjs';
-import { map, switchMap, distinctUntilChanged, filter, share, pluck, takeUntil, withLatestFrom, tap } from 'rxjs/operators';
+import { map, switchMap, distinctUntilChanged, filter, share, pluck, takeUntil, withLatestFrom, first } from 'rxjs/operators';
 import { StageService } from '../stage.service';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { environment } from 'src/environments/environment';
@@ -46,7 +46,7 @@ const mapLoaderOptions: MapLoaderOptions = {
     <div [ngClass]="{hidden: areParticipantsOpen$ | async}">
       <div class="post" [innerHtml]="description$ | async"></div>
 
-      <div class="details" *ngIf="stage.status !=='cancelled'">
+      <div class="details" [ngClass]="{hidden: stage.status ==='cancelled'}">
         <div id="google_map"></div>
         <div class="info" >
           <div>Cena: {{stage.fee}}</div>
@@ -102,7 +102,7 @@ export class StageComponent implements OnInit, OnDestroy {
   title?: Promise<string>;
   stage?: Stage;
 
-  map = mapLoader.initMap(mapLoaderOptions)
+  map = this.stage$.pipe(first()).toPromise().then(() => mapLoader.initMap(mapLoaderOptions))
   marker = this.map.then(map => new google.maps.Marker({
     map,
     draggable: false,
