@@ -1,15 +1,36 @@
-export interface PilotProfile {
-  name: string;
-  surname: string;
-  mobile: string;
-  
-  licenseId: string;
-  wing: string;
-  wingLevel: string;
+import { IsNotEmpty } from 'class-validator';
 
-  retrieveNeeded: boolean;
-  firstTime: boolean;
+export class PilotProfile {
 
-  emergencyContactName: string;
-  emergencyContactPhone: string;
+  @IsNotEmpty()
+  name = "";
+
+  @IsNotEmpty()
+  surname = "";
+
+  @IsNotEmpty()
+  mobile = "";
+
+  @IsNotEmpty()
+  licenseId = "";
+
+  @IsNotEmpty()
+  wing = "";
+
+  @IsNotEmpty()
+  wingLevel = "";
+
+  @IsNotEmpty()
+  retrieveNeeded = true;
+
+  @IsNotEmpty()
+  firstTime = false;
+
+  @IsNotEmpty()
+  emergencyContactName = "";
+
+  @IsNotEmpty()
+  emergencyContactPhone = "";
+
+  constructor() {}
 }
