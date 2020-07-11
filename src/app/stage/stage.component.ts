@@ -1,10 +1,16 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { map, pluck, switchMap, distinctUntilChanged } from 'rxjs/operators';
 import { StageService } from '../stage.service';
-import { DomSanitizer } from '@angular/platform-browser';
+import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { stages } from '../stages.mock';
 import { environment } from 'src/environments/environment';
 import { GoogleMap } from '@googlemaps/map-loader';
+import { Stage } from './stage.model';
+import { AngularFirestore } from '@angular/fire/firestore';
+import { firestore } from 'firebase/app';
+
+const mapLoader = new GoogleMap();
 
 @Component({
   selector: 'app-stage',
@@ -14,12 +20,10 @@ import { GoogleMap } from '@googlemaps/map-loader';
   <div class="container center">
     <div class="links">
       <a routerLink="./">info</a> 
-      <a routerLink="/stage/{{id}}/participants">participants</a>
+      <a [routerLink]="['participants']">participants</a>
     </div>
     <h1>{{title | async}}</h1>
-    <router-outlet (activate)="isParticipantVisible = true"
-                   (deactivate)="isParticipantVisible = false; initMap()"
-                   style="display: none"></router-outlet>
+    <router-outlet style="display: none"></router-outlet>
     <div *ngIf="!isParticipantVisible">
       <div class="post" [innerHtml]="description | async"> </div>
 
@@ -37,17 +41,24 @@ import { GoogleMap } from '@googlemaps/map-loader';
   `,
   styleUrls: ['./stage.component.scss']
 })
-export class StageComponent implements OnInit {
+export class StageComponent implements OnInit, OnDestroy {
+  private stage$ = this.activeRoute.params.pipe(
+    distinctUntilChanged((a, b) => a.year === b.year && a.id === b.id),
+    switchMap(({ year, id }) => this.afs.doc(`years/${year}/stages/${id}`).valueChanges())
+  )
 
   constructor(private activeRoute: ActivatedRoute,
-              private stageService: StageService,
-              private sanitizer: DomSanitizer) { }
+    private stageService: StageService,
+    private afs: AngularFirestore,
+    private sanitizer: DomSanitizer) { }
 
   isParticipantVisible = false;
-  id: any;
-  description;
-  title;
-  stage;
+  id?: string;
+  description?: Promise<SafeHtml>;
+  title?: Promise<string>;
+  stage?: Stage;
+
+  map?: google.maps.Map
 
   async initMap() {
     const mapOptions = {
@@ -57,7 +68,7 @@ export class StageComponent implements OnInit {
       },
       zoom: 8
     }
-    
+
     const apiOptions = {
       version: 'weekly',
       libraries: ['places']
@@ -71,8 +82,6 @@ export class StageComponent implements OnInit {
       apiOptions: apiOptions
     };
 
-    const mapLoader = new GoogleMap();
- 
     // Load the map
     const googleMap = await mapLoader.initMap(mapLoaderOptions);
 
@@ -85,18 +94,34 @@ export class StageComponent implements OnInit {
   }
   async ngOnInit() {
     const pathParams = this.activeRoute.snapshot.params;
-    this.id = (Object.keys(pathParams).length)? pathParams.id : '1';
-    const stagePost = this.stageService.getStageDescription(this.id);
+    this.id = (Object.keys(pathParams).length) ? pathParams.id : '1';
+    const stagePost = this.stageService.getStageDescription(this.id!);
 
     this.description = stagePost
       .then(res => res.html)
-      .then(res => this.sanitizer.bypassSecurityTrustHtml(res));
+      .then(res => this.sanitizer.bypassSecurityTrustHtml(res!));
 
     this.title = stagePost
-      .then(res => res.title)
+      .then(res => res.title!)
 
-    this.stage = stages.find(s => s.id.toString() === this.id);
+    this.stage = stages[0];
     await this.initMap()
+  }
+
+  ngOnDestroy() {
+    if (this.map) {
+      this.map.unbindAll()
+    }
+  }
+
+  formatDate(date: firestore.Timestamp): string {
+    const jsDate = date.toDate();
+    return jsDate.toLocaleString('lv-LV', {
+      weekday: 'long',
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric'
+    });
   }
 
 }

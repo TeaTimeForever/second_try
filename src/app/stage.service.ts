@@ -15,8 +15,8 @@ export class StageService {
     version: 'v2'
   });
 
-  getStageDescription(id) {
-    return this.api.posts.read({slug: `2020-posms-${id}`}, {formats: ['html', 'plaintext']});
+  getStageDescription(id: string) {
+    return this.api.posts.read({ slug: `2020-posms-${id}` }, { formats: ['html', 'plaintext'] });
   }
 
   getRegulationsPage() {

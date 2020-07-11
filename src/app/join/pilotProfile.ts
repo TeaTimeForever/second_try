@@ -1,4 +1,4 @@
-export class PilotProfile {
+export interface PilotProfile {
   name: string;
   surname: string;
   mobile: string;

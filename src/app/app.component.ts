@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { stages } from './stages.mock';
 import { UserService } from './user.service';
 import { Subject } from 'rxjs';
+import { AngularFirestore } from '@angular/fire/firestore';
+import { Stage } from './stage/stage.model';
 
 @Component({
   selector: 'app-root',
@@ -17,10 +19,10 @@ import { Subject } from 'rxjs';
   <div class="container center">
     <nav class="nav">
       <li><a href="regulations">Nolikums</a></li>
-      <li *ngFor="let stage of stages">
+      <li *ngFor="let stage of stages$ | async">
         <a [ngClass]="{blink: stage.status === 'ongoing',
                        disabled: stage.status === 'announced'}"
-           [href]="'stage/'+stage.id">{{stage.id}}.posms</a>
+           [href]="'stage/' + year + '/' + stage.id">{{stage.nr}}. posms</a>
       </li>
     </nav>
     <router-outlet style="display: none"></router-outlet>
@@ -30,15 +32,16 @@ import { Subject } from 'rxjs';
 })
 export class AppComponent implements OnInit {
   title = 'XC kauss';
-  stages = stages;
   logoutClicked$ = new Subject();
   loginClicked$ = new Subject();
+  year = new Date().getFullYear();
 
-  constructor(private userService: UserService) {}
+  constructor(private userService: UserService, private afs: AngularFirestore) { }
 
   user$ = this.userService.user$;
-  ngOnInit() {
+  stages$ = this.afs.collection<Stage>(`years/${this.year}/stages`, q => q.orderBy('nr', 'asc')).valueChanges({ idField: 'id' })
 
+  ngOnInit() {
     this.loginClicked$.subscribe(async () => {
       await this.userService.loginWithGoogle();
     });

@@ -82,9 +82,8 @@ import { PilotProfile } from './pilotProfile';
 export class JoinComponent implements OnInit {
 
   constructor() { }
-  profile = new PilotProfile();
+  profile = {} as PilotProfile;
 
-  
   ngOnInit() {
   }
 

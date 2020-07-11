@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { StageService } from '../stage.service';
-import { DomSanitizer } from '@angular/platform-browser';
+import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
+import { PostOrPage } from '@tryghost/content-api';
 
 @Component({
   selector: 'app-regulations',
@@ -16,18 +17,18 @@ import { DomSanitizer } from '@angular/platform-browser';
 })
 export class RegulationsComponent implements OnInit {
 
-  constructor( private stageService: StageService,
+  constructor(private stageService: StageService,
     private sanitizer: DomSanitizer) { }
 
-  description;
-  title;
+  description?: Promise<SafeHtml>;
+  title?: Promise<string | undefined>;
   ngOnInit() {
 
     const regulationsPage = this.stageService.getRegulationsPage();
 
     this.description = regulationsPage
       .then(res => res.html)
-      .then(res => this.sanitizer.bypassSecurityTrustHtml(res));
+      .then(res => this.sanitizer.bypassSecurityTrustHtml(res as string));
 
     this.title = regulationsPage
       .then(res => res.title)
