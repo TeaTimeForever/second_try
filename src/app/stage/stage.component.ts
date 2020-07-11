@@ -103,9 +103,6 @@ export class StageComponent implements OnInit, OnDestroy {
   unsubscribe$ = new Subject<void>()
 
   ngOnInit() {
-    this.activeRoute.url.subscribe(x => {
-      console.log("url", x)
-    })
     this.stage$.pipe(
       takeUntil(this.unsubscribe$),
       withLatestFrom(this.map, this.marker),
