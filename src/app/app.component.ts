@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { stages } from './stages.mock';
 import { UserService } from './user.service';
 import { Subject } from 'rxjs';
 import { AngularFirestore } from '@angular/fire/firestore';
@@ -18,11 +17,11 @@ import { Stage } from './stage/stage.model';
   </nav>
   <div class="container center">
     <nav class="nav">
-      <li><a href="regulations">Nolikums</a></li>
+      <li><a [routerLink]="['/regulations']">Nolikums</a></li>
       <li *ngFor="let stage of stages$ | async">
         <a [ngClass]="{blink: stage.status === 'ongoing',
                        disabled: stage.status === 'announced'}"
-           [href]="'stage/' + year + '/' + stage.id">{{stage.nr}}. posms</a>
+           [routerLink]="['/stage', year, stage.id]">{{stage.nr}}. posms</a>
       </li>
     </nav>
     <router-outlet style="display: none"></router-outlet>

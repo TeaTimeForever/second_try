@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { StageService } from '../stage.service';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
-import { PostOrPage } from '@tryghost/content-api';
 
 @Component({
   selector: 'app-regulations',
