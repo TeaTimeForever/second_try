@@ -1,6 +1,6 @@
 import { firestore } from "firebase/app";
 
-export type StageStatus = "announced" | "finished" | "ongoing";
+export type StageStatus = "announced" | "finished" | "ongoing" | "cancelled";
 
 export interface Stage {
   nr: number;
