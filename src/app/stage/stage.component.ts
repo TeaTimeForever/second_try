@@ -98,11 +98,11 @@ export class StageComponent implements OnInit, OnDestroy {
     const stagePost = this.stageService.getStageDescription(this.id!);
 
     this.description = stagePost
-      .then(res => res.html)
-      .then(res => this.sanitizer.bypassSecurityTrustHtml(res!));
+      .then((res:any) => res.html)
+      .then((res:any) => this.sanitizer.bypassSecurityTrustHtml(res!));
 
     this.title = stagePost
-      .then(res => res.title!)
+      .then((res:any) => res.title!)
 
     this.stage = stages[0];
     await this.initMap()
