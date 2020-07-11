@@ -8,6 +8,7 @@ import { environment } from 'src/environments/environment';
 import { GoogleMap } from '@googlemaps/map-loader';
 import { Stage } from './stage.model';
 import { AngularFirestore } from '@angular/fire/firestore';
+import { firestore } from 'firebase/app';
 
 const mapLoader = new GoogleMap();
 
@@ -20,12 +21,10 @@ const mapLoader = new GoogleMap();
   <div class="description container center">
     <div class="infos">
       <a routerLink="./">info</a> 
-      <a routerLink="/stage/{{id}}/participants">participants</a>
+      <a [routerLink]="['participants']">participants</a>
     </div>
     <h1>{{title | async}}</h1>
-    <router-outlet (activate)="isParticipantVisible = true"
-                   (deactivate)="isParticipantVisible = false; initMap()"
-                   style="display: none"></router-outlet>
+    <router-outlet style="display: none"></router-outlet>
     <div *ngIf="!isParticipantVisible">
       <div class="text-container" [innerHtml]="description | async"> </div>
   
@@ -45,7 +44,7 @@ const mapLoader = new GoogleMap();
 })
 export class StageComponent implements OnInit, OnDestroy {
   private stage$ = this.activeRoute.params.pipe(
-    distinctUntilChanged(({ year: pYear, id: pId }, { year, id }) => pYear === year && pId === id),
+    distinctUntilChanged((a, b) => a.year === b.year && a.id === b.id),
     switchMap(({ year, id }) => this.afs.doc(`years/${year}/stages/${id}`).valueChanges())
   )
 
@@ -114,6 +113,16 @@ export class StageComponent implements OnInit, OnDestroy {
     if (this.map) {
       this.map.unbindAll()
     }
+  }
+
+  formatDate(date: firestore.Timestamp): string {
+    const jsDate = date.toDate();
+    return jsDate.toLocaleString('lv-LV', {
+      weekday: 'long',
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric'
+    });
   }
 
 }
