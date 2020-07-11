@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router, ChildActivationEnd } from '@angular/router';
 import { Subject } from 'rxjs';
-import { map, switchMap, distinctUntilChanged, filter, share, pluck, takeUntil, withLatestFrom } from 'rxjs/operators';
+import { map, switchMap, distinctUntilChanged, filter, share, pluck, takeUntil, withLatestFrom, tap } from 'rxjs/operators';
 import { StageService } from '../stage.service';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { environment } from 'src/environments/environment';
@@ -43,7 +43,7 @@ const mapLoaderOptions: MapLoaderOptions = {
     </div>
     <h1>{{title$ | async}}</h1>
     <router-outlet style="display: none"></router-outlet>
-    <div *ngIf="!isParticipantVisible">
+    <div [ngClass]="{hidden: areParticipantsOpen$ | async}">
       <div class="post" [innerHtml]="description$ | async"></div>
 
       <div class="details" *ngIf="stage.status !=='cancelled'">
@@ -70,21 +70,28 @@ export class StageComponent implements OnInit, OnDestroy {
         map(s => ({ ...s, id }))
       )
     )
-  )
+  );
 
   private stagePost$ = this.stage$.pipe(
     switchMap(stage => this.stageService.getStageDescription(stage.id)),
     share()
-  )
+  );
 
   description$ = this.stagePost$.pipe(
     pluck('html'),
     map(html => this.sanitizer.bypassSecurityTrustHtml(html!))
+  );
+
+  title$ = this.stagePost$.pipe(pluck('title'));
+
+  areParticipantsOpen$ = this.router.events.pipe(
+    filter(e => e instanceof ChildActivationEnd),
+    map(() => this.activeRoute.children.length > 0),
+    distinctUntilChanged()
   )
 
-  title$ = this.stagePost$.pipe(pluck('title'))
-
   constructor(private activeRoute: ActivatedRoute,
+    private router: Router,
     private stageService: StageService,
     private afs: AngularFirestore,
     private sanitizer: DomSanitizer) { }
