@@ -18,6 +18,7 @@ import { Stage } from './stage/stage.model';
   </nav>
   <div class="container center">
     <nav class="nav">
+      <li><a href="regulations">Nolikums</a></li>
       <li *ngFor="let stage of stages$ | async">
         <a [ngClass]="{blink: stage.status === 'ongoing',
                        disabled: stage.status === 'announced'}"

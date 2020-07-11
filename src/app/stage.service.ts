@@ -18,4 +18,8 @@ export class StageService {
   getStageDescription(id: string) {
     return this.api.posts.read({ slug: `2020-posms-${id}` }, { formats: ['html', 'plaintext'] });
   }
+
+  getRegulationsPage() {
+    return this.api.pages.read({slug: `2020-gada-nolikums`}, {formats: ['html', 'plaintext']});
+  }
 }

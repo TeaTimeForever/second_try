@@ -12,6 +12,7 @@ import { ParticipantsComponent } from "./participants/participants.component";
 import { environment } from "src/environments/environment";
 import { JoinComponent } from "./join/join.component";
 import { NoActiveStageComponent } from './stage/no-active-stage/no-active-stage.component';
+import { RegulationsComponent } from './regulations/regulations.component';
 
 @NgModule({
   declarations: [
@@ -20,6 +21,7 @@ import { NoActiveStageComponent } from './stage/no-active-stage/no-active-stage.
     ParticipantsComponent,
     JoinComponent,
     NoActiveStageComponent,
+    RegulationsComponent
   ],
   imports: [
     BrowserModule,

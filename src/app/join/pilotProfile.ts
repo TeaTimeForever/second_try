@@ -2,8 +2,7 @@ export interface PilotProfile {
   name: string;
   surname: string;
   mobile: string;
-  email: string;
-
+  
   licenseId: string;
   wing: string;
   wingLevel: string;

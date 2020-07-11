@@ -8,7 +8,7 @@ import {participants} from '../participants.mock';
   <router-outlet (activate)="participantFormVisible=true"
                  (deactivate)="participantFormVisible=false"
                  style="display: none"></router-outlet>
-  <div *ngIf="!participantFormVisible">
+  <div class="content" *ngIf="!participantFormVisible">
   <div>
     <table class="tab">
     <tbody><tr>

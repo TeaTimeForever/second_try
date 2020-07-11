@@ -1,24 +1,30 @@
 .stage-content {
-  .details {
-    margin-top: 1em;
-    display: flex;
-    .useful {
-      display: flex;
-      flex-direction: column;
-      height: 300px;
-      div {
-        margin-bottom: 1em;
-      }
-    }
-  }
-
-  .infos {
+  margin: 0 1em;
+  .links {
     display: flex;
     a {
       margin-right: 20px;
     }
   }
-  .description {
+  .post {
+    padding: 2em 1em;
+    background-color: #f8f8f8;
+  }
+  .details {
+    margin-top: 1em;
+    display: flex;
+    @media only screen and (max-width: 600px) {
+      flex-flow: column-reverse;
+    }
+    .info {
+      display: flex;
+      flex-direction: column;
+      div {
+        margin-bottom: 1em;
+      }
+    }
+  }
+  .container {
     max-width: 800px;
   }
 }

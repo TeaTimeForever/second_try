@@ -15,22 +15,21 @@ const mapLoader = new GoogleMap();
 @Component({
   selector: 'app-stage',
   template: `
-<div class="ml-3 stage-content" >
+<div class="stage-content" >
 
-
-  <div class="description container center">
-    <div class="infos">
+  <div class="container center">
+    <div class="links">
       <a routerLink="./">info</a> 
       <a [routerLink]="['participants']">participants</a>
     </div>
     <h1>{{title | async}}</h1>
     <router-outlet style="display: none"></router-outlet>
     <div *ngIf="!isParticipantVisible">
-      <div class="text-container" [innerHtml]="description | async"> </div>
-  
+      <div class="post" [innerHtml]="description | async"> </div>
+
       <div class="details">
         <div id="google_map"></div>
-        <div class="useful">
+        <div class="info">
           <div>Cena: {{stage.price}}</div>
           <div>Datums: {{stage.date}}</div>
           <div>Vieta: {{stage.place}}</div>

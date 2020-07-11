@@ -31,14 +31,6 @@ import { PilotProfile } from './pilotProfile';
                name="mobile">
       </div>
       <div>
-        <label for="email">Email</label>
-        <input class="input-text"
-               type="text"
-               required
-               [(ngModel)]="profile.email"
-               name="email">
-      </div>
-      <div>
         <label for="licenseId">License Id</label>
         <input class="input-text"
                type="text"
