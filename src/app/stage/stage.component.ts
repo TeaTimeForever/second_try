@@ -37,7 +37,7 @@ const mapLoaderOptions: MapLoaderOptions = {
   <div class="container center" *ngIf="stage$ | async as stage">
     <div class="links">
       <a routerLink="./">info</a> 
-      <a *ngIf="stage.status !=='cancelled'" [routerLink]="['participants']">participants</a>
+      <a *ngIf="stage.status !=='cancelled'" [routerLink]="['participants']">dalībnieki</a>
       <div *ngIf="stage.status ==='ongoing'" class="registration">Notiek reģistrācija</div>
       <div *ngIf="stage.status ==='cancelled'" class="cancelled">Atcelts</div>
     </div>
@@ -103,11 +103,12 @@ export class StageComponent implements OnInit, OnDestroy {
   stage?: Stage;
 
   map = this.stage$.pipe(first()).toPromise().then(() => mapLoader.initMap(mapLoaderOptions))
-  marker = this.map.then(map => new google.maps.Marker({
+  marker = this.stage$.pipe(first()).toPromise().then(() => this.map.then(map => new google.maps.Marker({
     map,
     draggable: false,
     animation: google.maps.Animation.DROP
   }))
+  )
 
   unsubscribe$ = new Subject<void>()
 
