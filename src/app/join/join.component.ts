@@ -8,28 +8,28 @@ import { Subject } from 'rxjs';
   template: `
     <form [formGroup]="form" class="r-form center-children" *ngIf="form?.customValidateErrors | async as errors">
       <h2 class="center-text">Registracija</h2>
-      <div>
+      <div class="field">
         <label for="name">Name</label>
         <input class="input-text"
                type="text"
                formControlName="name"
                name="name">
       </div>
-      <div>
+      <div class="field">
         <label for="surname">Lastname</label>
         <input class="input-text"
                type="text"
                formControlName="surname"
                name="surname">
       </div>
-      <div>
+      <div class="field">
         <label for="mobile">Mob. phone</label>
         <input class="input-text"
                type="text"
                formControlName="mobile"
                name="mobile">
       </div>
-      <div>
+      <div class="field">
         <label for="licenseId">License Id</label>
         <input class="input-text"
                type="text"
@@ -37,14 +37,14 @@ import { Subject } from 'rxjs';
                name="licenseId">
         <p *ngIf="errors.licenseId && form.controls.licenseId.touched" class="error">{{errors.licenseId[0]}}</p>
       </div>
-      <div>
+      <div class="field">
         <label for="wing">Wing Model</label>
         <input class="input-text"
                type="text"
                formControlName="wing"
                name="wing">
       </div>
-      <div>
+      <div class="field">
         <label for="wingLevel">Wing class</label>
         <input class="input-text"
                type="text"
@@ -52,19 +52,34 @@ import { Subject } from 'rxjs';
                name="wingLevel">
       </div>
       
-      <div>
+      <div class="field">
         <label for="emergencyContactName">Emergency Contact name</label>
         <input class="input-text"
                type="text"
                formControlName="emergencyContactName"
                name="emergencyContactName">
       </div>
-      <div>
+      <div class="field">
         <label for="emergencyContactPhone">Emergency Contact phone</label>
         <input class="input-text"
                type="text"
                formControlName="emergencyContactPhone"
                name="emergencyContactPhone">
+      </div>
+
+      <div class="field checkbox">
+        <label for="firstTime">Vai tas ir pirmais XC kauss?</label>
+        <input class="input-text"
+               type="checkbox"
+               formControlName="firstTime"
+               name="firstTime">
+      </div>
+      <div class="field checkbox">
+        <label for="retrieveNeeded">Vai vajag retrīvu?</label>
+        <input class="input-text"
+               type="checkbox"
+               formControlName="retrieveNeeded"
+               name="retrieveNeeded">
       </div>
       <div class="actions">
         <button class="btn btn-2" (click)="registerButtonClicked$.next()">Pievienoties</button>
@@ -89,6 +104,7 @@ export class JoinComponent implements OnInit {
     this.registerButtonClicked$.subscribe(() => {
       this.form.markAllAsTouched();
       this.form.object = this.form.object;
+      console.log(this.form.object)
       console.log('valid?', this.form.valid);
     });
   }

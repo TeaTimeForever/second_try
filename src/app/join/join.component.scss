@@ -5,4 +5,27 @@ form {
   .actions {
     display: flex
   }
+
+  .field {
+    margin-top: 1em;
+    .input-text {
+      margin-bottom: 0em;
+    }
+    p.error {
+      font-size: 0.8em;
+      color: crimson;
+      margin-bottom: 0em;
+    }
+  }
+  .checkbox {
+    display: flex;
+    align-items: baseline;
+    label {
+      width: 200px;
+      white-space: nowrap;
+    }
+    input[type=checkbox] {
+      width: initial
+    }
+  }
 }

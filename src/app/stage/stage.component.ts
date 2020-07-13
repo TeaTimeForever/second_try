@@ -37,7 +37,7 @@ const mapLoaderOptions: MapLoaderOptions = {
   <div class="container center" *ngIf="stage$ | async as stage">
     <div class="links">
       <a routerLink="./">info</a> 
-      <a [routerLink]="['participants']">participants</a>
+      <a *ngIf="stage.status !=='cancelled'" [routerLink]="['participants']">participants</a>
       <div *ngIf="stage.status ==='ongoing'" class="registration">Notiek reģistrācija</div>
       <div *ngIf="stage.status ==='cancelled'" class="cancelled">Atcelts</div>
     </div>
