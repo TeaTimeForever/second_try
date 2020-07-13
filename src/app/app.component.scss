@@ -12,6 +12,12 @@
     color: black;
   }
 
+  .stages {
+    .active-link {
+      font-weight: bold;
+    }
+  }
+
   .disabled {
     pointer-events: none;
     cursor: default;
@@ -23,17 +29,19 @@
   }
   
   .blink {
-    animation: blink-animation 3s steps(5, start) infinite;
-    -webkit-animation: blink-animation 1s steps(5, start) infinite;
+    animation: blink-animation 1s steps(5, start) infinite;
   }
   @keyframes blink-animation {
 
     50% {
       opacity: 0.5;
-      color: salmon;
+      color: rgb(121, 219, 134);
+    }
+    75% {
+      color: rgb(24, 202, 24);
     }
     100% {
-      color: red;
+      color: forestgreen;
     }
   }
 }

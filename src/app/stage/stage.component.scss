@@ -5,6 +5,10 @@
     align-items: baseline;
     a {
       margin-right: 20px;
+      text-decoration: none;
+    }
+    a.active-link {
+      text-decoration: underline;
     }
     .registration {
       font-weight: 800;

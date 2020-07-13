@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { ActivatedRoute, Router, ChildActivationEnd } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { Subject, combineLatest } from 'rxjs';
-import { map, switchMap, distinctUntilChanged, filter, share, pluck, takeUntil, withLatestFrom, first } from 'rxjs/operators';
+import { map, switchMap, distinctUntilChanged, filter, share, pluck, takeUntil, first } from 'rxjs/operators';
 import { StageService } from '../stage.service';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { environment } from 'src/environments/environment';
@@ -36,8 +36,10 @@ const mapLoaderOptions: MapLoaderOptions = {
 
   <div class="container center" *ngIf="stage$ | async as stage">
     <div class="links">
-      <a routerLink="./">info</a> 
-      <a *ngIf="stage.status !=='cancelled'" [routerLink]="['participants']">dalībnieki</a>
+      <a routerLink="./"
+         routerLinkActive="active-link"
+         [routerLinkActiveOptions]="{exact:true  }">info</a> 
+      <a routerLink="participants" routerLinkActive="active-link" *ngIf="stage.status !=='cancelled'" >dalībnieki</a>
       <div *ngIf="stage.status ==='ongoing'" class="registration">Notiek reģistrācija</div>
       <div *ngIf="stage.status ==='cancelled'" class="cancelled">Atcelts</div>
     </div>

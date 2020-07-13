@@ -16,13 +16,14 @@ import { Stage } from './stage/stage.model';
     </ul>
   </nav>
   <div class="container center">
-    <nav class="nav">
-      <li><a [routerLink]="['/regulations']">Nolikums</a></li>
+    <nav class="nav stages">
+      <li><a [routerLink]="['/regulations']"  routerLinkActive="active-link">Nolikums</a></li>
       <li *ngFor="let stage of stages$ | async">
         <a [ngClass]="{blink: stage.status === 'ongoing',
                        disabled: stage.status === 'announced',
                        cancelled: stage.status === 'cancelled'
                       }"
+           routerLinkActive="active-link"
            [routerLink]="['/stage', year, stage.id]">{{stage.nr}}. posms</a>
       </li>
     </nav>
