@@ -1,5 +1,14 @@
 {
   "projects": {
     "default": "xckauss-2ndtry"
+  },
+  "targets": {
+    "xckauss-2ndtry": {
+      "hosting": {
+        "secondtry": [
+          "xckauss-2ndtry"
+        ]
+      }
+    }
   }
 }
