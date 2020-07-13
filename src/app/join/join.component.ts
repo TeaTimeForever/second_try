@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { DynamicFormBuilder, DynamicFormGroup } from 'ngx-dynamic-form-builder';
+import { DynamicFormBuilder } from 'ngx-dynamic-form-builder';
 import { PilotProfile } from './pilotProfile';
 import { Subject } from 'rxjs';
 

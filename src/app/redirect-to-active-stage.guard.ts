@@ -19,6 +19,6 @@ export class RedirectToActiveStageGuard implements CanActivate {
         }
         return this.router.createUrlTree(['/stage', year, stages.docs[0].id]);
       })
-    )
+    );
   }
 }

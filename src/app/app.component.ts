@@ -12,7 +12,7 @@ import { Stage } from './stage/stage.model';
     <a class="nav-brand" href="">{{title}}</a>
     <ul>
       <li *ngIf="!!(user$ | async) === false"><button (click)="loginClicked$.next()" class="btn btn-5 mt-1">Login</button></li>
-      <li *ngIf="user$ | async">{{(user$| async)?.displayName}}</li>
+      <li *ngIf="user$ | async as user">{{user.displayName}}</li>
       <li *ngIf="user$ | async"><button (click)="logoutClicked$.next()" class="btn btn-5 mt-1">Logout</button></li>
     </ul>
   </nav>
