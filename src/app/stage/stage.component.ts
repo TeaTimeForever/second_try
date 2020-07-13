@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router, ChildActivationEnd } from '@angular/router';
-import { Subject } from 'rxjs';
+import { Subject, combineLatest } from 'rxjs';
 import { map, switchMap, distinctUntilChanged, filter, share, pluck, takeUntil, withLatestFrom, first } from 'rxjs/operators';
 import { StageService } from '../stage.service';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
@@ -105,9 +105,10 @@ export class StageComponent implements OnInit, OnDestroy {
   unsubscribe$ = new Subject<void>()
 
   ngOnInit() {
-    this.stage$.pipe(
-      takeUntil(this.unsubscribe$),
-      withLatestFrom(this.map, this.marker),
+    combineLatest(
+      this.stage$, this.map, this.marker
+    ).pipe(
+      takeUntil(this.unsubscribe$)
     ).subscribe(([{ location: { latitude, longitude } }, map, marker]) => {
       // Whenever stage location changes - pan map to it, and update marker position
       const latLng: google.maps.LatLngLiteral = { lat: latitude, lng: longitude }
