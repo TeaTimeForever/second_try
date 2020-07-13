@@ -43,7 +43,7 @@ const mapLoaderOptions: MapLoaderOptions = {
     </div>
     <h1>{{title$ | async}}</h1>
     <router-outlet style="display: none"></router-outlet>
-    <div [ngClass]="{hidden: areParticipantsOpen$ | async}">
+    <div [ngClass]="{hidden: areParticipantsOpen}">
       <div class="post" [innerHtml]="description$ | async"></div>
 
       <div class="details" [ngClass]="{hidden: stage.status ==='cancelled'}">
@@ -84,19 +84,11 @@ export class StageComponent implements OnInit, OnDestroy {
 
   title$ = this.stagePost$.pipe(pluck('title'));
 
-  areParticipantsOpen$ = this.router.events.pipe(
-    filter(e => e instanceof ChildActivationEnd),
-    map(() => this.activeRoute.children.length > 0),
-    distinctUntilChanged()
-  )
-
   constructor(private activeRoute: ActivatedRoute,
-    private router: Router,
     private stageService: StageService,
     private afs: AngularFirestore,
     private sanitizer: DomSanitizer) { }
 
-  isParticipantVisible = false;
   id?: string;
   description?: Promise<SafeHtml>;
   title?: Promise<string>;
@@ -142,4 +134,7 @@ export class StageComponent implements OnInit, OnDestroy {
     });
   }
 
+  get areParticipantsOpen() {
+    return this.activeRoute.children.length > 0;
+  }
 }
