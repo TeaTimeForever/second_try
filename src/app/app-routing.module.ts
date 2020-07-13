@@ -6,6 +6,8 @@ import { JoinComponent } from './join/join.component';
 import { RegulationsComponent } from './regulations/regulations.component';
 import { RedirectToActiveStageGuard } from './redirect-to-active-stage.guard';
 import { NoActiveStageComponent } from './stage/no-active-stage/no-active-stage.component';
+import { PrivacyComponent } from './privacy/privacy.component';
+import { TermsOfServcieComponent } from './terms-of-servcie/terms-of-servcie.component';
 
 
 const routes: Routes = [
@@ -20,6 +22,8 @@ const routes: Routes = [
     ]
   },
   {path: 'regulations', component: RegulationsComponent},
+  {path: 'privacypolicy', component: PrivacyComponent},
+  {path: 'termsofservice', component: TermsOfServcieComponent},
 ];
 
 @NgModule({

@@ -13,6 +13,8 @@ import { environment } from "src/environments/environment";
 import { JoinComponent } from "./join/join.component";
 import { NoActiveStageComponent } from './stage/no-active-stage/no-active-stage.component';
 import { RegulationsComponent } from './regulations/regulations.component';
+import { PrivacyComponent } from './privacy/privacy.component';
+import { TermsOfServcieComponent } from './terms-of-servcie/terms-of-servcie.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +23,9 @@ import { RegulationsComponent } from './regulations/regulations.component';
     ParticipantsComponent,
     JoinComponent,
     NoActiveStageComponent,
-    RegulationsComponent
+    RegulationsComponent,
+    PrivacyComponent,
+    TermsOfServcieComponent
   ],
   imports: [
     BrowserModule,
