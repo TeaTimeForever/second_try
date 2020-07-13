@@ -1,13 +1,11 @@
-.nav {
-  padding: 0;
+.container {
+  min-height: 100%;
   ul {
     display: flex;
     align-items: baseline;
   }
-}
-.container {
   .nav {
-    padding-top: 0;
+    padding: 0;
     background-color: white;
     color: black;
   }
@@ -43,5 +41,16 @@
     100% {
       color: forestgreen;
     }
+  }
+}
+
+footer {
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  a {
+    font-size: 0.8em;
+    color: lightsteelblue;
   }
 }

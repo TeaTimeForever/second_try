@@ -7,6 +7,7 @@ import { Stage } from './stage/stage.model';
 @Component({
   selector: 'app-root',
   template: `
+  <div class="container center">
   <nav class="nav sb">
     <a class="nav-brand" href="">{{title}}</a>
     <ul>
@@ -15,7 +16,7 @@ import { Stage } from './stage/stage.model';
       <li *ngIf="user$ | async"><button (click)="logoutClicked$.next()" class="btn btn-5 mt-1">Logout</button></li>
     </ul>
   </nav>
-  <div class="container center">
+  
     <nav class="nav stages">
       <li><a [routerLink]="['/regulations']"  routerLinkActive="active-link">Nolikums</a></li>
       <li *ngFor="let stage of stages$ | async">
@@ -29,6 +30,10 @@ import { Stage } from './stage/stage.model';
     </nav>
     <router-outlet style="display: none"></router-outlet>
   </div>
+  <footer>
+    <a href="privacypolicy">Privacy policy</a>
+    <a href="termsofservice">Terms of Service</a>
+  </footer>
   `,
   styleUrls: ['./app.component.scss']
 })
