@@ -14,7 +14,7 @@ import {participants} from '../participants.mock';
     <tbody><tr>
       <th>Nr.</th>
       <th>Name</th>
-      <th>gender</th>
+      <th>F/M</th>
     </tr>
     <tr *ngFor="let p of participants; let i = index">
       <td>{{i+1}}</td>
@@ -24,7 +24,13 @@ import {participants} from '../participants.mock';
     </tbody></table>
     <a href="">download</a>
   </div>
-  <a routerLink="./join" class="btn btn-2 mt-1">Join</a>
+  <div class="participate_option" *ngIf="false">
+    <a routerLink="./join" class="btn btn-2 mt-1">Piedalīties</a>
+  </div>
+  <div class="participate_option">
+    <p>Tu esi vaiksmīgi piereģistrēts.</p>
+    <button class="btn btn-danger">Atcelt registrāciju</button>
+  </div>
 </div>
   `,
   styleUrls: ['./participants.component.scss']

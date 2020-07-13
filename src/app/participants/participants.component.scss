@@ -10,5 +10,9 @@
   .content {
     display: flex;
     align-items: baseline;
+    width: 100%;
+    .participate_option {
+      margin: auto;
+    }
   }
 }
