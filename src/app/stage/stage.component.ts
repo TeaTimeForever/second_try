@@ -62,7 +62,7 @@ const mapLoaderOptions: MapLoaderOptions = {
   styleUrls: ['./stage.component.scss']
 })
 export class StageComponent implements OnInit, OnDestroy {
-  private stage$ = this.activeRoute.params.pipe(
+  stage$ = this.activeRoute.params.pipe(
     distinctUntilChanged((a, b) => a.year === b.year && a.id === b.id),
     switchMap(({ year, id }) =>
       this.afs.doc<Stage>(`years/${year}/stages/${id}`).valueChanges().pipe(

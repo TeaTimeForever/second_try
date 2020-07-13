@@ -83,7 +83,7 @@ import { Subject } from 'rxjs';
       </div>
       <div class="actions">
         <button class="btn btn-2" (click)="registerButtonClicked$.next()">Pievienoties</button>
-        <button class="btn btn-4" (click)="window.history.back()">Atpakaļ</button>
+        <button class="btn btn-4" (click)="back()">Atpakaļ</button>
       </div>
     </form>
   `,
@@ -109,5 +109,7 @@ export class JoinComponent implements OnInit {
     });
   }
 
-
+  back() {
+    window.history.back();
+  }
 }
