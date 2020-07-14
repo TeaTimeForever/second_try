@@ -46,7 +46,7 @@ export class ParticipantsComponent implements OnDestroy {
     distinctUntilChanged((a, b) => a.id === b.id && a.year === b.year),
   );
   participantList$: Observable<Array<Participant & HasId>> = this.yearAndStageId$.pipe(
-    switchMap(({ id, year }) => this.afs.collection<Participant>(`years/${year}/stages/${id}`).valueChanges({ idField: 'id' }))
+    switchMap(({ id, year }) => this.afs.collection<Participant>(`years/${year}/stages/${id}/participants`).valueChanges({ idField: 'id' }))
   )
   /** What will happen when join button will be pressed? (depends on current login state and whether user has registered or clicked participate) */
   joinButtonPurpose$: Observable<JoinPurpose> = this.userService.user$.pipe(

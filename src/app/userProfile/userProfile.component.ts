@@ -1,9 +1,19 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { DynamicFormBuilder } from 'ngx-dynamic-form-builder';
 import { PilotProfile } from './pilotProfile';
-import { Subject } from 'rxjs';
+import { Subject, zip, EMPTY, Observable } from 'rxjs';
 import { AngularFirestore } from '@angular/fire/firestore';
-import { takeUntil } from 'rxjs/operators';
+import { takeUntil, map, switchMap, distinctUntilChanged, debounceTime, withLatestFrom, filter, catchError, tap } from 'rxjs/operators';
+import { ActivatedRoute, Router } from '@angular/router';
+import { isEqual } from 'lodash-es'
+import { UserService, UserPublicData, UserPersonalData } from '../user.service';
+import { Stage } from '../stage/stage.model';
+import { Participant } from '../participants/participant.model';
+
+interface RouteParams {
+  year?: string,
+  stage?: string
+}
 
 @Component({
   selector: 'app-join',
@@ -25,11 +35,11 @@ import { takeUntil } from 'rxjs/operators';
                name="surname">
       </div>
       <div class="field">
-        <label for="mobile">Mob. phone</label>
+        <label for="phone">Mob. phone</label>
         <input class="input-text"
                type="text"
-               formControlName="mobile"
-               name="mobile">
+               formControlName="phone"
+               name="phone">
       </div>
       <div class="field">
         <label for="licenseId">License Id</label>
@@ -47,11 +57,11 @@ import { takeUntil } from 'rxjs/operators';
                name="wing">
       </div>
       <div class="field">
-        <label for="wingLevel">Wing class</label>
+        <label for="wingClass">Wing class</label>
         <input class="input-text"
                type="text"
-               formControlName="wingLevel"
-               name="wingLevel">
+               formControlName="wingClass"
+               name="wingClass">
       </div>
       
       <div class="field">
@@ -69,22 +79,24 @@ import { takeUntil } from 'rxjs/operators';
                name="emergencyContactPhone">
       </div>
 
-      <div class="field checkbox">
-        <label for="firstTime">Vai tas ir pirmais XC kauss?</label>
-        <input class="input-text"
-               type="checkbox"
-               formControlName="firstTime"
-               name="firstTime">
-      </div>
-      <div class="field checkbox">
-        <label for="retrieveNeeded">Vai vajag retrīvu?</label>
-        <input class="input-text"
-               type="checkbox"
-               formControlName="retrieveNeeded"
-               name="retrieveNeeded">
+      <div *ngIf="showStageOptions$ | async">
+        <div class="field checkbox">
+          <label for="firstTime">Vai šis ir Tavs pirmais XC kauss?</label>
+          <input class="input-text"
+                type="checkbox"
+                formControlName="firstTime"
+                name="firstTime">
+        </div>
+        <div class="field checkbox">
+          <label for="retrieveNeeded">Vai būs nepieciešams retrīvs?</label>
+          <input class="input-text"
+                type="checkbox"
+                formControlName="retrieveNeeded"
+                name="retrieveNeeded">
+        </div>
       </div>
       <div class="actions">
-        <button class="btn btn-2" (click)="registerButtonClicked$.next()">Pievienoties</button>
+        <button [disabled]="!form.valid" *ngIf="showStageOptions$ | async" class="btn btn-2" (click)="registerButtonClicked$.next()">Pievienoties</button>
         <button class="btn btn-4" (click)="back()">Atpakaļ</button>
       </div>
     </form>
@@ -93,18 +105,86 @@ import { takeUntil } from 'rxjs/operators';
 })
 export class UserProfileComponent implements OnInit, OnDestroy {
   private unsubscribe$ = new Subject<void>();
-  constructor(private afs: AngularFirestore) { }
+  private stageToSignUp$ = this.activatedRoute.queryParams.pipe(
+    map(({ year, stage }: RouteParams) => (year && stage) ? { year, stage } : null)
+  )
+  showStageOptions$ = this.stageToSignUp$.pipe(
+    map(s => s !== null)
+  )
+  constructor(
+    private afs: AngularFirestore,
+    private activatedRoute: ActivatedRoute,
+    private user: UserService,
+    private router: Router
+  ) { }
   registerButtonClicked$ = new Subject();
 
   fb = new DynamicFormBuilder();
   form = this.fb.group(PilotProfile, new PilotProfile());
 
+  publicDataChanges: Observable<UserPublicData> = this.form.valueChanges.pipe(
+    filter(() => this.form.valid),
+    map(UserService.extractPublicData),
+    distinctUntilChanged(isEqual),
+    debounceTime(3000),
+  );
+  privateDataChanges: Observable<UserPersonalData> = this.form.valueChanges.pipe(
+    filter(() => this.form.valid),
+    map(UserService.extractPersonalData),
+    distinctUntilChanged(isEqual),
+    debounceTime(3000),
+  );
+
   ngOnInit() {
-    this.registerButtonClicked$.pipe(takeUntil(this.unsubscribe$)).subscribe(() => {
+    this.registerButtonClicked$.pipe(
+      takeUntil(this.unsubscribe$),
+      withLatestFrom(this.form.valueChanges as Observable<PilotProfile>, this.stageToSignUp$, this.user.user$)
+    ).subscribe(async ([_, value, stageInfo, user]) => {
       this.form.markAllAsTouched();
       this.form.object = this.form.object;
-      console.log(this.form.object)
-      console.log('valid?', this.form.valid);
+      if (!this.form.valid || stageInfo === null) return;
+      const { year, stage } = stageInfo
+      try {
+        await this.afs.doc<Participant>(`years/${year}/stages/${stage}/participants/${user!.uid}`).set({
+          isFirstCompetition: value.firstTime,
+          isRetrieveNeeded: value.retrieveNeeded
+        });
+        await this.router.navigate(['/stage', year, stage, 'participants'], { queryParams: null });
+      } catch (err) {
+        alert(`Error: ${err.message}`);
+      }
+    });
+
+    // Pre-populate the form
+    this.user.user$.pipe(
+      takeUntil(this.unsubscribe$),
+      switchMap(user => zip(this.afs.doc<UserPublicData>(`users/${user!.uid}`).get(), this.afs.doc<UserPersonalData>(`users/${user!.uid}/personal/contacts`).get()).pipe(
+        map(([uPublic, uPersonal]): PilotProfile =>
+          (!uPublic.exists && !uPersonal.exists) ?
+            // If documents haven't been created, populate from auth
+            UserService.initializeUserFromAuth(user!) :
+            // Else merge public and private data in a single doc
+            { ...uPublic.data() as UserPublicData, ...uPersonal.data() as UserPersonalData })
+      ))
+    ).subscribe(data => {
+      this.form.patchValue(data);
+    });
+
+    // Send updates to firebase as user types in form
+    this.publicDataChanges.pipe(
+      takeUntil(this.unsubscribe$),
+      withLatestFrom(this.user.user$)
+    ).subscribe(([data, user]) => {
+      console.log("Updating public", data);
+      this.afs.doc<UserPublicData>(`users/${user!.uid}`).set(data);
+    });
+
+    this.privateDataChanges.pipe(
+      takeUntil(this.unsubscribe$),
+      withLatestFrom(this.user.user$)
+    ).subscribe(([data, user]) => {
+      console.log("Updating private", data);
+      this.afs.doc<UserPersonalData>(`users/${user!.uid}/personal/contacts`).set(data);
     });
   }
 
