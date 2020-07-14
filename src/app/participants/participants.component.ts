@@ -29,8 +29,12 @@ type JoinPurpose = 'login' | 'register' | 'join' | 'leave';
     </tbody></table>
     <!--<a href="">download</a>-->
   </div>
-  <div class="participate_option">
-  	<button *ngIf="joinButtonText$ | async as text" (click)="joinToggleButtonClicks$.next()" class="btn btn-2 mt-1">{{text}}</button>
+  <div class="participate_option" *ngIf="joinButtonPurpose$ | async as purpose">
+    <button *ngIf="joinButtonText$ | async as text"
+      (click)="joinToggleButtonClicks$.next()"
+      class="btn btn-2 mt-1"
+      [ngClass]="{'btn-2': purpose !== 'leave',
+                  'btn-danger': purpose === 'leave' }">{{text}}</button>
   </div>
 </div>
   `,

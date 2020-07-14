@@ -156,7 +156,6 @@ export class UserProfileComponent implements OnInit, OnDestroy {
     ).subscribe(async ([_, value, stageInfo, user]) => {
       this.form.markAllAsTouched();
       this.form.object = this.form.object;
-      console.log('is valid', this.form.valid)
       if (!this.form.valid || stageInfo === null) return;
       const { year, stage } = stageInfo
       try {
