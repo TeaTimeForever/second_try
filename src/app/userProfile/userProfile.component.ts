@@ -1,7 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { DynamicFormBuilder } from 'ngx-dynamic-form-builder';
 import { PilotProfile } from './pilotProfile';
 import { Subject } from 'rxjs';
+import { AngularFirestore } from '@angular/fire/firestore';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'app-join',
@@ -87,26 +89,28 @@ import { Subject } from 'rxjs';
       </div>
     </form>
   `,
-  styleUrls: ['./join.component.scss']
+  styleUrls: ['./userProfile.component.scss']
 })
-export class JoinComponent implements OnInit {
-
-  constructor() {
-
-  }
-  profile = {} as PilotProfile;
+export class UserProfileComponent implements OnInit, OnDestroy {
+  private unsubscribe$ = new Subject<void>();
+  constructor(private afs: AngularFirestore) { }
   registerButtonClicked$ = new Subject();
 
   fb = new DynamicFormBuilder();
   form = this.fb.group(PilotProfile, new PilotProfile());
 
   ngOnInit() {
-    this.registerButtonClicked$.subscribe(() => {
+    this.registerButtonClicked$.pipe(takeUntil(this.unsubscribe$)).subscribe(() => {
       this.form.markAllAsTouched();
       this.form.object = this.form.object;
       console.log(this.form.object)
       console.log('valid?', this.form.valid);
     });
+  }
+
+  ngOnDestroy() {
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
   }
 
   back() {

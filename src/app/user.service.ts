@@ -1,21 +1,11 @@
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { auth } from 'firebase/app';
-import { Observable } from 'rxjs';
+import { PilotProfile } from './userProfile/pilotProfile';
 
-export interface UserPublicData {
-  name: string,
-  surname: string,
-  wing: string,
-  wingClass: 'A' | 'B' | 'C' | 'D' | 'other'
-}
+export type UserPublicData = Pick<PilotProfile, 'name' | 'surname' | 'wing' | 'wingClass'>;
 
-export interface UserPersonalData {
-  phone: string,
-  phoneNr: string,
-  emergencyContactName: string,
-  emergencyContactPhone: string,
-}
+export type UserPersonalData = Pick<PilotProfile, 'phone' | 'licenseId' | 'emergencyContactName' | 'emergencyContactPhone'>
 
 @Injectable({
   providedIn: 'root'
@@ -34,5 +24,12 @@ export class UserService {
     return this.afAuth.signOut();
   }
 
+  static extractPublicData({ name, surname, wing, wingClass }: PilotProfile): UserPublicData {
+    return { name, surname, wing, wingClass };
+  }
+
+  static extractPersonalData({ phone, licenseId, emergencyContactName, emergencyContactPhone }: PilotProfile): UserPersonalData {
+    return { phone, licenseId, emergencyContactName, emergencyContactPhone };
+  }
 }
 

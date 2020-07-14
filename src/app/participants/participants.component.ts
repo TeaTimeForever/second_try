@@ -2,7 +2,7 @@ import { Component, OnDestroy } from '@angular/core';
 import { participants } from '../participants.mock';
 import { Subject, Observable, of } from 'rxjs';
 import { UserService, UserPublicData } from '../user.service';
-import { switchMap, distinctUntilChanged, map, withLatestFrom, tap, startWith } from 'rxjs/operators';
+import { switchMap, distinctUntilChanged, map, withLatestFrom, tap, startWith, first } from 'rxjs/operators';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Participant, HasId } from './participant.model';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -54,6 +54,7 @@ export class ParticipantsComponent implements OnDestroy {
       (user === null) ? of<JoinPurpose>('login') :
         // Now check if user has a document
         this.afs.doc<UserPublicData>(`users/${user.uid}`).valueChanges().pipe(
+          first(),
           switchMap(userPublicDoc =>
             (userPublicDoc === undefined) ? of<JoinPurpose>('register') :
               // Now check if user is among listed participants in this stage

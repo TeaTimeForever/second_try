@@ -3,7 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { AngularFireAuthGuard, AngularFireAuthGuardModule } from '@angular/fire/auth-guard';
 import { StageComponent } from './stage/stage.component';
 import { ParticipantsComponent } from './participants/participants.component';
-import { JoinComponent } from './join/join.component';
+import { UserProfileComponent } from './userProfile/userProfile.component';
 import { RegulationsComponent } from './regulations/regulations.component';
 import { RedirectToActiveStageGuard } from './redirect-to-active-stage.guard';
 import { NoActiveStageComponent } from './stage/no-active-stage/no-active-stage.component';
@@ -20,15 +20,15 @@ const routes: Routes = [
     path: 'stage/:year/:id', component: StageComponent, children: [
       {
         path: 'participants', component: ParticipantsComponent, children: [
-          { path: 'join', component: JoinComponent }
+          { path: 'join', component: UserProfileComponent }
         ]
       },
     ]
   },
-  {path: 'regulations', component: RegulationsComponent},
-  {path: 'privacypolicy', component: PrivacyComponent},
-  {path: 'termsofservice', component: TermsOfServcieComponent},
-  {path: 'personal', component: JoinComponent, canActivate: [AngularFireAuthGuard], data: { authGuardPipe: mustBeLoggedIn } }
+  { path: 'regulations', component: RegulationsComponent },
+  { path: 'privacypolicy', component: PrivacyComponent },
+  { path: 'termsofservice', component: TermsOfServcieComponent },
+  { path: 'personal', component: UserProfileComponent, canActivate: [AngularFireAuthGuard], data: { authGuardPipe: mustBeLoggedIn } }
 ];
 
 @NgModule({
