@@ -1,4 +1,4 @@
-import { IsNotEmpty } from 'class-validator';
+import { IsNotEmpty, IsBoolean, IsOptional } from 'class-validator';
 
 export class PilotProfile {
 
@@ -20,11 +20,13 @@ export class PilotProfile {
   @IsNotEmpty()
   wingClass: 'A' | 'B' | 'C' | 'D' | 'other' = 'A';
 
-  @IsNotEmpty()
-  retrieveNeeded = true;
+  @IsOptional()
+  @IsBoolean()
+  retrieveNeeded?= false;
 
-  @IsNotEmpty()
-  firstTime = false;
+  @IsOptional()
+  @IsBoolean()
+  firstTime?= false;
 
   @IsNotEmpty()
   emergencyContactName = "";
