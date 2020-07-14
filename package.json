@@ -26,11 +26,13 @@
     "@types/tryghost__content-api": "^1.3.4",
     "class-transformer": "^0.2.3",
     "class-validator": "^0.12.2",
+    "classlist.js": "^1.1.20150312",
     "firebase": "^7.15.5",
     "lodash-es": "^4.17.15",
     "ngx-dynamic-form-builder": "^1.5.4",
     "rxjs": "~6.4.0",
     "tslib": "^1.10.0",
+    "web-animations-js": "^2.3.2",
     "zone.js": "~0.9.1"
   },
   "devDependencies": {

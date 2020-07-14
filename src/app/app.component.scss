@@ -11,6 +11,9 @@
   }
 
   .stages {
+    @media only screen and (max-width: 600px) {
+      flex-flow: wrap;
+    }
     .active-link {
       font-weight: bold;
     }

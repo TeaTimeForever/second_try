@@ -1,9 +1,12 @@
 form {
-  margin: 0;
+  margin: auto;
+  border: none;
+  box-shadow: none;
   padding: 0;
 
   .actions {
-    display: flex
+    display: flex;
+    margin-top: 1em;
   }
 
   .field {

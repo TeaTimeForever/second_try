@@ -11,6 +11,19 @@
     display: flex;
     align-items: baseline;
     width: 100%;
+    @media only screen and (max-width: 600px) {
+      flex-flow: column-reverse;
+    }
+
+    @media only screen and (max-width: 600px) {
+      .table_wrap {
+        width: 100%;
+        .tab {
+          width: 100%;
+        }
+      }
+    }
+    
     .participate_option {
       margin: auto;
     }
