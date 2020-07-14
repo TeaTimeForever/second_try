@@ -10,7 +10,7 @@ import { AppComponent } from "./app.component";
 import { StageComponent } from "./stage/stage.component";
 import { ParticipantsComponent } from "./participants/participants.component";
 import { environment } from "src/environments/environment";
-import { JoinComponent } from "./join/join.component";
+import { UserProfileComponent } from "./userProfile/userProfile.component";
 import { NoActiveStageComponent } from './stage/no-active-stage/no-active-stage.component';
 import { RegulationsComponent } from './regulations/regulations.component';
 import { PrivacyComponent } from './privacy/privacy.component';
@@ -21,7 +21,7 @@ import { TermsOfServcieComponent } from './terms-of-servcie/terms-of-servcie.com
     AppComponent,
     StageComponent,
     ParticipantsComponent,
-    JoinComponent,
+    UserProfileComponent,
     NoActiveStageComponent,
     RegulationsComponent,
     PrivacyComponent,
@@ -35,10 +35,10 @@ import { TermsOfServcieComponent } from './terms-of-servcie/terms-of-servcie.com
     // firebase
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireAuthModule,
-    AngularFirestoreModule,
+    AngularFirestoreModule.enablePersistence(),
 
   ],
   providers: [],
   bootstrap: [AppComponent],
 })
-export class AppModule {}
+export class AppModule { }

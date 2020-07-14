@@ -9,7 +9,7 @@ export class PilotProfile {
   surname = "";
 
   @IsNotEmpty()
-  mobile = "";
+  phone = "";
 
   @IsNotEmpty()
   licenseId = "";
@@ -18,7 +18,7 @@ export class PilotProfile {
   wing = "";
 
   @IsNotEmpty()
-  wingLevel = "";
+  wingClass: 'A' | 'B' | 'C' | 'D' | 'other' = 'A';
 
   @IsNotEmpty()
   retrieveNeeded = true;
@@ -32,5 +32,5 @@ export class PilotProfile {
   @IsNotEmpty()
   emergencyContactPhone = "";
 
-  constructor() {}
+  constructor() { }
 }

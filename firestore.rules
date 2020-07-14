@@ -4,6 +4,17 @@ service cloud.firestore {
     match /years/{year} {
       match /stages/{stage} {
         allow read;
+        match /participants/{participant} {
+          allow read;
+          allow create, update: if request.auth && request.auth.uid == participant;
+        }
+      }
+    }
+    match /users/{uid} {
+      allow get;
+      allow create, update: if request.auth && request.auth.uid == uid;
+      match /personal/contacts {
+        allow get, create, update: if request.auth && request.auth.uid == uid;
       }
     }
   }

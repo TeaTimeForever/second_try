@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { Subject, combineLatest } from 'rxjs';
-import { map, switchMap, distinctUntilChanged, filter, share, pluck, takeUntil, first } from 'rxjs/operators';
+import { ActivatedRoute, Router, ChildActivationEnd } from '@angular/router';
+import { Subject, Observable, combineLatest } from 'rxjs';
+import { map, switchMap, distinctUntilChanged, filter, share, pluck, takeUntil, withLatestFrom, first } from 'rxjs/operators';
 import { StageService } from '../stage.service';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { environment } from 'src/environments/environment';
@@ -64,8 +64,10 @@ const mapLoaderOptions: MapLoaderOptions = {
   styleUrls: ['./stage.component.scss']
 })
 export class StageComponent implements OnInit, OnDestroy {
-  stage$ = this.activeRoute.params.pipe(
-    distinctUntilChanged((a, b) => a.year === b.year && a.id === b.id),
+  yearAndStageId$ = (this.activeRoute.params as Observable<{ year: string, id: string }>).pipe(
+    distinctUntilChanged((a, b) => a.year === b.year && a.id === b.id)
+  );
+  stage$ = this.yearAndStageId$.pipe(
     switchMap(({ year, id }) =>
       this.afs.doc<Stage>(`years/${year}/stages/${id}`).valueChanges().pipe(
         filter((s): s is Stage => s !== undefined),
