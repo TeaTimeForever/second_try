@@ -18,11 +18,7 @@ const routes: Routes = [
   { path: '', canActivate: [RedirectToActiveStageGuard], component: NoActiveStageComponent },
   {
     path: 'stage/:year/:id', component: StageComponent, children: [
-      {
-        path: 'participants', component: ParticipantsComponent, children: [
-          { path: 'join', component: UserProfileComponent }
-        ]
-      },
+      {path: 'participants', component: ParticipantsComponent},
     ]
   },
   { path: 'regulations', component: RegulationsComponent },
