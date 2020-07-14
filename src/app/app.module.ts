@@ -37,7 +37,7 @@ import { ParticipantRowComponent } from './participants/participant-row/particip
     // firebase
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireAuthModule,
-    AngularFirestoreModule.enablePersistence(),
+    AngularFirestoreModule,
 
   ],
   providers: [],
