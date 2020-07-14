@@ -25,11 +25,7 @@ type JoinPurpose = 'login' | 'register' | 'join' | 'leave';
       <th>Name</th>
       <th>F/M</th>
     </tr>
-    <tr *ngFor="let p of participants; let i = index">
-      <td>{{i+1}}</td>
-      <td>{{p.name}}</td>
-      <td>{{p.gender}}</td>
-    </tr>
+    <tr app-participant-row *ngFor="let p of participantList$ | async; let i = index" [nr]="i+1" [participantId]="p.id"></tr>
     </tbody></table>
     <!--<a href="">download</a>-->
   </div>
@@ -46,7 +42,7 @@ export class ParticipantsComponent implements OnDestroy {
     distinctUntilChanged((a, b) => a.id === b.id && a.year === b.year),
   );
   participantList$: Observable<Array<Participant & HasId>> = this.yearAndStageId$.pipe(
-    switchMap(({ id, year }) => this.afs.collection<Participant>(`years/${year}/stages/${id}/participants`).valueChanges({ idField: 'id' }))
+    switchMap(({ id, year }) => this.afs.collection<Participant>(`years/${year}/stages/${id}/participants`, ref => ref.where('cancelled', '==', false)).valueChanges({ idField: 'id' }))
   )
   /** What will happen when join button will be pressed? (depends on current login state and whether user has registered or clicked participate) */
   joinButtonPurpose$: Observable<JoinPurpose> = this.userService.user$.pipe(
@@ -86,7 +82,8 @@ export class ParticipantsComponent implements OnDestroy {
           if (user === null) return;
           await this.afs.doc<Participant>(`years/${year}/stages/${id}/participants/${user.uid}`).set({
             isFirstCompetition: true,
-            isRetrieveNeeded: true
+            isRetrieveNeeded: true,
+            cancelled: false,
           });
           break;
         case 'leave':
