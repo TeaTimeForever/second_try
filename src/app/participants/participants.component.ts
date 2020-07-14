@@ -25,11 +25,7 @@ type JoinPurpose = 'login' | 'register' | 'join' | 'leave';
       <th>Name</th>
       <th>F/M</th>
     </tr>
-    <tr *ngFor="let p of participants; let i = index">
-      <td>{{i+1}}</td>
-      <td>{{p.name}}</td>
-      <td>{{p.gender}}</td>
-    </tr>
+    <tr app-participant-row *ngFor="let p of participantList$ | async; let i = index" [nr]="i+1" [participantId]="p.id"></tr>
     </tbody></table>
     <!--<a href="">download</a>-->
   </div>
