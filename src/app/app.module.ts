@@ -15,6 +15,7 @@ import { NoActiveStageComponent } from './stage/no-active-stage/no-active-stage.
 import { RegulationsComponent } from './regulations/regulations.component';
 import { PrivacyComponent } from './privacy/privacy.component';
 import { TermsOfServcieComponent } from './terms-of-servcie/terms-of-servcie.component';
+import { ParticipantRowComponent } from './participants/participant-row/participant-row.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import { TermsOfServcieComponent } from './terms-of-servcie/terms-of-servcie.com
     NoActiveStageComponent,
     RegulationsComponent,
     PrivacyComponent,
-    TermsOfServcieComponent
+    TermsOfServcieComponent,
+    ParticipantRowComponent
   ],
   imports: [
     BrowserModule,

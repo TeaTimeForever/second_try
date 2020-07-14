@@ -5,7 +5,7 @@ import { PilotProfile } from './userProfile/pilotProfile';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Observable, zip } from 'rxjs';
 
-export type UserPublicData = Pick<PilotProfile, 'name' | 'surname' | 'wing' | 'wingClass'>;
+export type UserPublicData = Pick<PilotProfile, 'name' | 'surname' | 'wing' | 'wingClass' | 'gender'>;
 
 export type UserPersonalData = Pick<PilotProfile, 'phone' | 'licenseId' | 'emergencyContactName' | 'emergencyContactPhone'>
 
@@ -26,8 +26,8 @@ export class UserService {
     return this.afAuth.signOut();
   }
 
-  static extractPublicData({ name, surname, wing, wingClass }: PilotProfile): UserPublicData {
-    return { name, surname, wing, wingClass };
+  static extractPublicData({ name, surname, wing, wingClass, gender }: PilotProfile): UserPublicData {
+    return { name, surname, wing, wingClass, gender };
   }
 
   static extractPersonalData({ phone, licenseId, emergencyContactName, emergencyContactPhone }: PilotProfile): UserPersonalData {
@@ -39,6 +39,7 @@ export class UserService {
     return {
       name,
       surname,
+      gender: '',
       phone: phoneNumber || '',
       emergencyContactName: '',
       emergencyContactPhone: '',

@@ -35,6 +35,13 @@ interface RouteParams {
                name="surname">
       </div>
       <div class="field">
+        <label for="gender">Dzimums</label>
+        <select name="gender" formControlName="gender">
+          <option value="M">Vīr.</option>
+          <option value="F">Siev.</option>
+        </select>
+      </div>
+      <div class="field">
         <label for="phone">Mob. phone</label>
         <input class="input-text"
                type="text"

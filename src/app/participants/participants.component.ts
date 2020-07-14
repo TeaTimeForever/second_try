@@ -31,7 +31,7 @@ type JoinPurpose = 'login' | 'register' | 'join' | 'leave';
       <td>{{p.gender}}</td>
     </tr>
     </tbody></table>
-    <a href="">download</a>
+    <!--<a href="">download</a>-->
   </div>
   <div class="participate_option">
   	<button *ngIf="joinButtonText$ | async as text" (click)="joinToggleButtonClicks$.next()" class="btn btn-2 mt-1">{{text}}</button>

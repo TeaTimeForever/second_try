@@ -9,6 +9,9 @@ export class PilotProfile {
   surname = "";
 
   @IsNotEmpty()
+  gender = "";
+
+  @IsNotEmpty()
   phone = "";
 
   @IsNotEmpty()
