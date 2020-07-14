@@ -9,7 +9,6 @@ import { UserPublicData } from 'src/app/user.service';
     <ng-container *ngIf="participant$ | async as p">
       <td>{{nr}}</td>
       <td>{{p.name}} {{p.surname}}</td>
-      <td>{{p.gender}}</td>
     </ng-container>
   `,
   styles: [],
