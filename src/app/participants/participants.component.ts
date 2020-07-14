@@ -18,7 +18,7 @@ type JoinPurpose = 'login' | 'register' | 'join' | 'leave';
                  (deactivate)="participantFormVisible=false"
                  style="display: none"></router-outlet>
   <div class="content" *ngIf="!participantFormVisible">
-  <div>
+  <div class="table_wrap">
     <table class="tab">
     <tbody><tr>
       <th>Nr.</th>
