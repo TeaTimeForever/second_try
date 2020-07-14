@@ -190,7 +190,6 @@ export class UserProfileComponent implements OnInit, OnDestroy {
       takeUntil(this.unsubscribe$),
       withLatestFrom(this.user.user$)
     ).subscribe(([data, user]) => {
-      console.log("Updating public", data);
       this.afs.doc<UserPublicData>(`users/${user!.uid}`).set(data);
     });
 
@@ -198,7 +197,6 @@ export class UserProfileComponent implements OnInit, OnDestroy {
       takeUntil(this.unsubscribe$),
       withLatestFrom(this.user.user$)
     ).subscribe(([data, user]) => {
-      console.log("Updating private", data);
       this.afs.doc<UserPersonalData>(`users/${user!.uid}/personal/contacts`).set(data);
     });
   }
