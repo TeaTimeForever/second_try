@@ -35,7 +35,7 @@ type JoinPurpose = 'login' | 'register' | 'join' | 'leave';
       class="btn btn-2 mt-1"
       [ngClass]="{'btn-2': purpose !== 'leave',
                   'btn-danger': purpose === 'leave' }">{{text}}</button>
-    <div *ngIf="(joinButtonPurpose$ | async) === 'join'">
+    <div class="join" *ngIf="(joinButtonPurpose$ | async) === 'join'">
       <label><input type="checkbox" [(ngModel)]="retrieveNeeded" />Būs nepieciešams retrīvs</label>
       <label><input type="checkbox" [(ngModel)]="firstTry" />Šī būs mana pirmā dalība XCKausā</label>
     </div>

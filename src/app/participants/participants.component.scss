@@ -26,6 +26,13 @@
     
     .participate_option {
       margin: auto;
+      .join {
+        display: flex;
+        flex-flow: column;
+        label {
+          margin: 0.5em;
+        }
+      }
     }
   }
 }
