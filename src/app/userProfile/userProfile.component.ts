@@ -7,7 +7,6 @@ import { takeUntil, map, switchMap, distinctUntilChanged, debounceTime, withLate
 import { ActivatedRoute, Router } from '@angular/router';
 import { isEqual } from 'lodash-es'
 import { UserService, UserPublicData, UserPersonalData } from '../user.service';
-import { Stage } from '../stage/stage.model';
 import { Participant } from '../participants/participant.model';
 
 interface RouteParams {
@@ -140,13 +139,13 @@ export class UserProfileComponent implements OnInit, OnDestroy {
     filter(() => this.form.valid),
     map(UserService.extractPublicData),
     distinctUntilChanged(isEqual),
-    debounceTime(3000),
+    debounceTime(1500),
   );
   privateDataChanges: Observable<UserPersonalData> = this.form.valueChanges.pipe(
     filter(() => this.form.valid),
     map(UserService.extractPersonalData),
     distinctUntilChanged(isEqual),
-    debounceTime(3000),
+    debounceTime(1500),
   );
 
   ngOnInit() {
