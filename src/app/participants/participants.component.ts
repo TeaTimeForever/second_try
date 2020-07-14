@@ -2,7 +2,7 @@ import { Component, OnDestroy } from '@angular/core';
 import { participants } from '../participants.mock';
 import { Subject, Observable, of } from 'rxjs';
 import { UserService, UserPublicData } from '../user.service';
-import { switchMap, distinctUntilChanged, map, withLatestFrom, tap, startWith, first } from 'rxjs/operators';
+import { switchMap, distinctUntilChanged, map, withLatestFrom, first } from 'rxjs/operators';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Participant, HasId } from './participant.model';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -30,13 +30,19 @@ type JoinPurpose = 'login' | 'register' | 'join' | 'leave';
     <!--<a href="">download</a>-->
   </div>
   <div class="participate_option">
-  	<button *ngIf="joinButtonText$ | async as text" (click)="joinToggleButtonClicks$.next()" class="btn btn-2 mt-1">{{text}}</button>
+    <button *ngIf="joinButtonText$ | async as text" (click)="joinToggleButtonClicks$.next()" class="btn btn-2 mt-1">{{text}}</button>
+    <div *ngIf="(joinButtonPurpose$ | async) === 'join'">
+      <label><input type="checkbox" [(ngModel)]="retrieveNeeded" />Būs nepieciešams retrīvs</label>
+      <label><input type="checkbox" [(ngModel)]="firstTry" />Šī būs mana pirmā dalība XCKausā</label>
+    </div>
   </div>
 </div>
   `,
   styleUrls: ['./participants.component.scss']
 })
 export class ParticipantsComponent implements OnDestroy {
+  retrieveNeeded: boolean = true;
+  firstTry: boolean = false;
   joinToggleButtonClicks$ = new Subject<void>();
   yearAndStageId$ = (this.activatedRoute.parent!.params as Observable<{ year: string, id: string }>).pipe(
     distinctUntilChanged((a, b) => a.id === b.id && a.year === b.year),
@@ -81,14 +87,14 @@ export class ParticipantsComponent implements OnDestroy {
         case 'join':
           if (user === null) return;
           await this.afs.doc<Participant>(`years/${year}/stages/${id}/participants/${user.uid}`).set({
-            isFirstCompetition: true,
-            isRetrieveNeeded: true,
+            isFirstCompetition: this.firstTry,
+            isRetrieveNeeded: this.retrieveNeeded,
             cancelled: false,
           });
           break;
         case 'leave':
           if (user === null) return;
-          await this.afs.doc<Participant>(`years/${year}/stages/${id}/participants/${user.uid}`).set({
+          await this.afs.doc<Participant>(`years/${year}/stages/${id}/participants/${user.uid}`).update({
             cancelled: true
           });
       }
