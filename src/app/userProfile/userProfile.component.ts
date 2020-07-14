@@ -154,7 +154,8 @@ export class UserProfileComponent implements OnInit, OnDestroy {
       try {
         await this.afs.doc<Participant>(`years/${year}/stages/${stage}/participants/${user!.uid}`).set({
           isFirstCompetition: value.firstTime,
-          isRetrieveNeeded: value.retrieveNeeded
+          isRetrieveNeeded: value.retrieveNeeded,
+          cancelled: false
         });
         await this.router.navigate(['/stage', year, stage, 'participants'], { queryParams: null });
       } catch (err) {
