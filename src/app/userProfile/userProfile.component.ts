@@ -21,18 +21,20 @@ interface RouteParams {
     <form [formGroup]="form" class="r-form center-children" *ngIf="form?.customValidateErrors | async as errors">
       <h2 class="center-text">Registracija</h2>
       <div class="field">
-        <label for="name">Name</label>
+        <label for="name">Vārds</label>
         <input class="input-text"
                type="text"
                formControlName="name"
                name="name">
+        <p *ngIf="errors.name && form.controls.name.touched" class="error">{{errors.name[0]}}</p>
       </div>
       <div class="field">
-        <label for="surname">Lastname</label>
+        <label for="surname">Uzvārds</label>
         <input class="input-text"
                type="text"
                formControlName="surname"
                name="surname">
+        <p *ngIf="errors.surname && form.controls.surname.touched" class="error">{{errors.surname[0]}}</p>
       </div>
       <div class="field">
         <label for="gender">Dzimums</label>
@@ -42,14 +44,15 @@ interface RouteParams {
         </select>
       </div>
       <div class="field">
-        <label for="phone">Mob. phone</label>
+        <label for="phone">Tel. numurs</label>
         <input class="input-text"
                type="text"
                formControlName="phone"
                name="phone">
+        <p *ngIf="errors.phone && form.controls.phone.touched" class="error">{{errors.phone[0]}}</p>
       </div>
       <div class="field">
-        <label for="licenseId">License Id</label>
+        <label for="licenseId">Licences ID</label>
         <input class="input-text"
                type="text"
                formControlName="licenseId"
@@ -62,6 +65,7 @@ interface RouteParams {
                type="text"
                formControlName="wing"
                name="wing">
+        <p *ngIf="errors.licenseId && form.controls.licenseId.touched" class="error">{{errors.licenseId[0]}}</p>
       </div>
       <div class="field">
         <label for="wingClass">Wing class</label>
@@ -69,6 +73,7 @@ interface RouteParams {
                type="text"
                formControlName="wingClass"
                name="wingClass">
+        <p *ngIf="errors.wingClass && form.controls.wingClass.touched" class="error">{{errors.wingClass[0]}}</p>
       </div>
       
       <div class="field">
@@ -77,6 +82,7 @@ interface RouteParams {
                type="text"
                formControlName="emergencyContactName"
                name="emergencyContactName">
+        <p *ngIf="errors.emergencyContactName && form.controls.emergencyContactName.touched" class="error">{{errors.emergencyContactName[0]}}</p>
       </div>
       <div class="field">
         <label for="emergencyContactPhone">Emergency Contact phone</label>
@@ -84,6 +90,7 @@ interface RouteParams {
                type="text"
                formControlName="emergencyContactPhone"
                name="emergencyContactPhone">
+        <p *ngIf="errors.emergencyContactPhone && form.controls.emergencyContactPhone.touched" class="error">{{errors.emergencyContactPhone[0]}}</p>
       </div>
 
       <div *ngIf="showStageOptions$ | async">
@@ -103,7 +110,7 @@ interface RouteParams {
         </div>
       </div>
       <div class="actions">
-        <button [disabled]="!form.valid" *ngIf="showStageOptions$ | async" class="btn btn-2" (click)="registerButtonClicked$.next()">Pievienoties</button>
+        <button *ngIf="showStageOptions$ | async" class="btn btn-2" (click)="registerButtonClicked$.next()">Pievienoties</button>
         <button class="btn btn-4" (click)="back()">Atpakaļ</button>
       </div>
     </form>
@@ -149,6 +156,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
     ).subscribe(async ([_, value, stageInfo, user]) => {
       this.form.markAllAsTouched();
       this.form.object = this.form.object;
+      console.log('is valid', this.form.valid)
       if (!this.form.valid || stageInfo === null) return;
       const { year, stage } = stageInfo
       try {

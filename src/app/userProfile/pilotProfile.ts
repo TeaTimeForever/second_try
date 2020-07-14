@@ -2,39 +2,38 @@ import { IsNotEmpty, IsBoolean, IsOptional } from 'class-validator';
 
 export class PilotProfile {
 
-  @IsNotEmpty()
+  @IsNotEmpty({message: 'Vārds ir obligāts'})
   name = "";
 
-  @IsNotEmpty()
+  @IsNotEmpty({message: 'Uzvārds ir obligāts'})
   surname = "";
 
-  @IsNotEmpty()
-  gender = "";
+  gender = "M";
 
-  @IsNotEmpty()
+  @IsNotEmpty({message: 'Tel. numurs ir obligāts'})
   phone = "";
 
-  @IsNotEmpty()
+  @IsNotEmpty({message: 'Licences numurs ir obligāts'})
   licenseId = "";
 
-  @IsNotEmpty()
+  @IsNotEmpty({message: 'Spārna modelis ir obligāts'})
   wing = "";
 
-  @IsNotEmpty()
-  wingClass: 'A' | 'B' | 'C' | 'D' | 'other' = 'A';
+  @IsNotEmpty({message: 'Spārna klase ir obligāta'})
+  wingClass: 'A' | 'B' | 'C' | 'D' | 'other' = 'B';
 
   @IsOptional()
   @IsBoolean()
-  retrieveNeeded?= false;
+  retrieveNeeded?= true;
 
   @IsOptional()
   @IsBoolean()
   firstTime?= false;
 
-  @IsNotEmpty()
+  @IsNotEmpty({message: 'Ārkārtas kontakta vārds ir obligāts'})
   emergencyContactName = "";
 
-  @IsNotEmpty()
+  @IsNotEmpty({message: 'Ārkārtas kontakta numurs ir obligāts'})
   emergencyContactPhone = "";
 
   constructor() { }
