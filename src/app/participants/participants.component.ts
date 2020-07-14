@@ -44,7 +44,6 @@ export class ParticipantsComponent implements OnDestroy {
   joinToggleButtonClicks$ = new Subject<void>();
   yearAndStageId$ = (this.activatedRoute.parent!.params as Observable<{ year: string, id: string }>).pipe(
     distinctUntilChanged((a, b) => a.id === b.id && a.year === b.year),
-    tap(x => console.log("year and stage", x))
   );
   participantList$: Observable<Array<Participant & HasId>> = this.yearAndStageId$.pipe(
     switchMap(({ id, year }) => this.afs.collection<Participant>(`years/${year}/stages/${id}`).valueChanges({ idField: 'id' }))
@@ -72,33 +71,31 @@ export class ParticipantsComponent implements OnDestroy {
   );
   subscription$ = this.joinToggleButtonClicks$.pipe(
     withLatestFrom(this.joinButtonPurpose$, this.yearAndStageId$, this.userService.user$)
-  ).subscribe(([_, purpose, { year, id }, user]): void => {
-    console.log("button clicks")
-    switch (purpose) {
-      case 'login':
-        this.userService.loginWithGoogle().then(() => {
-          this.router.navigate(['/personal'], { queryParams: { year, stage: id } });
-        });
-        break;
-      case 'register':
-        this.router.navigate(['/personal'], { queryParams: { year, stage: id } });
-        break;
-      case 'join':
-        if (user === null) return;
-        this.afs.doc<Participant>(`years/${year}/stages/${id}/participants/${user.uid}`).set({
-          isFirstCompetition: true,
-          isRetrieveNeeded: true
-        }).catch(err => {
-          alert(`Error: ${err.message}`);
-        });
-        break;
-      case 'leave':
-        if (user === null) return;
-        this.afs.doc<Participant>(`years/${year}/stages/${id}/participants/${user.uid}`).set({
-          cancelled: true
-        }).catch(err => {
-          alert(`Error: ${err.message}`);
-        });
+  ).subscribe(async ([_, purpose, { year, id }, user]): Promise<void> => {
+    try {
+      switch (purpose) {
+        case 'login':
+          await this.userService.loginWithGoogle()
+          await this.router.navigate(['/personal'], { queryParams: { year, stage: id } })
+          break;
+        case 'register':
+          await this.router.navigate(['/personal'], { queryParams: { year, stage: id } });
+          break;
+        case 'join':
+          if (user === null) return;
+          await this.afs.doc<Participant>(`years/${year}/stages/${id}/participants/${user.uid}`).set({
+            isFirstCompetition: true,
+            isRetrieveNeeded: true
+          });
+          break;
+        case 'leave':
+          if (user === null) return;
+          await this.afs.doc<Participant>(`years/${year}/stages/${id}/participants/${user.uid}`).set({
+            cancelled: true
+          });
+      }
+    } catch (err) {
+      alert(`Error: ${err.message}`);
     }
   });
   constructor(
