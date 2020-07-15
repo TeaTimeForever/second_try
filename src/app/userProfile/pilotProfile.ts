@@ -13,6 +13,9 @@ export class PilotProfile {
   @IsNotEmpty({message: 'Tel. numurs ir obligāts'})
   phone = "";
 
+  @IsNotEmpty({message: 'Licences katehorija ir obligāta'})
+  licenseCategory: 'A' | 'B' | 'C' | 'D' = "B";
+
   @IsNotEmpty({message: 'Licences numurs ir obligāts'})
   licenseId = "";
 

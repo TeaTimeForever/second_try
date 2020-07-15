@@ -51,6 +51,14 @@ interface RouteParams {
         <p *ngIf="errors.phone && form.controls.phone.touched" class="error">{{errors.phone[0]}}</p>
       </div>
       <div class="field">
+        <label for="licenseId">Licences kategorija</label>
+        <input class="input-text"
+               type="text"
+               formControlName="licenseCategory"
+               name="licenseCategory">
+        <p *ngIf="errors.licenseCategory && form.controls.licenseCategory.touched" class="error">{{errors.licenseCategory[0]}}</p>
+      </div>
+      <div class="field">
         <label for="licenseId">Licences ID</label>
         <input class="input-text"
                type="text"

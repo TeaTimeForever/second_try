@@ -2,10 +2,11 @@ import { Component, OnDestroy } from '@angular/core';
 import { participants } from '../participants.mock';
 import { Subject, Observable, of } from 'rxjs';
 import { UserService, UserPublicData } from '../user.service';
-import { switchMap, distinctUntilChanged, map, withLatestFrom, first } from 'rxjs/operators';
+import { switchMap, distinctUntilChanged, map, withLatestFrom, first, startWith } from 'rxjs/operators';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Participant, HasId } from './participant.model';
 import { ActivatedRoute, Router } from '@angular/router';
+import { start } from 'repl';
 
 /** Depending on current state - the join button can trigger multiple possibilities login window, registration form, toggling to join for the competition, leaving the competition */
 type JoinPurpose = 'login' | 'register' | 'join' | 'leave';
@@ -24,16 +25,17 @@ type JoinPurpose = 'login' | 'register' | 'join' | 'leave';
       <th>Nr.</th>
       <th>Name</th>
     </tr>
-    <tr app-participant-row *ngFor="let p of participantList$ | async; let i = index; trackBy: trackById" [nr]="i+1" [participantId]="p.id"></tr>
+    <tr app-participant-row *ngFor="let p of participantList$ | async; let i = index; trackBy: trackById"
+      [nr]="i+1"
+      [participantId]="p.id"
+      (removeUser)="removeParticipation$.next()"></tr>
     </tbody></table>
     <!--<a href="">download</a>-->
   </div>
   <div class="participate_option" *ngIf="joinButtonPurpose$ | async as purpose">
-    <button *ngIf="joinButtonText$ | async as text"
+    <button *ngIf=" (joinButtonPurpose$ | async) !== 'leave'"
       (click)="joinToggleButtonClicks$.next()"
-      class="btn btn-2 mt-1"
-      [ngClass]="{'btn-2': purpose !== 'leave',
-                  'btn-danger': purpose === 'leave' }">{{text}}</button>
+      class="btn prime">{{joinButtonText$ | async}}</button>
     <div class="join" *ngIf="(joinButtonPurpose$ | async) === 'join'">
       <label><input type="checkbox" [(ngModel)]="retrieveNeeded" />Būs nepieciešams retrīvs</label>
       <label><input type="checkbox" [(ngModel)]="firstTry" />Šī būs mana pirmā dalība XCKausā</label>
@@ -47,6 +49,7 @@ export class ParticipantsComponent implements OnDestroy {
   retrieveNeeded: boolean = true;
   firstTry: boolean = false;
   joinToggleButtonClicks$ = new Subject<void>();
+  removeParticipation$ = new Subject<void>()
   yearAndStageId$ = (this.activatedRoute.parent!.params as Observable<{ year: string, id: string }>).pipe(
     distinctUntilChanged((a, b) => a.id === b.id && a.year === b.year),
   );
@@ -68,12 +71,13 @@ export class ParticipantsComponent implements OnDestroy {
               )
           )
         )
-    )
+    ),
+    startWith('leave')
   );
   joinButtonText$ = this.joinButtonPurpose$.pipe(
+    startWith('join'),
     map(purpose => purpose === "login" ? 'Ielogoties lai reģistrētos' :
-      purpose === 'register' ? 'Reģistrēties' :
-        purpose === 'join' ? 'Pieteikties posmam' : 'Atteikties no dalības posmā')
+      purpose === 'register' ? 'Reģistrēties' : 'join')
   );
   subscription$ = this.joinToggleButtonClicks$.pipe(
     withLatestFrom(this.joinButtonPurpose$, this.yearAndStageId$, this.userService.user$)
@@ -95,16 +99,12 @@ export class ParticipantsComponent implements OnDestroy {
             cancelled: false,
           });
           break;
-        case 'leave':
-          if (user === null) return;
-          await this.afs.doc<Participant>(`years/${year}/stages/${id}/participants/${user.uid}`).update({
-            cancelled: true
-          });
       }
     } catch (err) {
       alert(`Error: ${err.message}`);
     }
   });
+  
   constructor(
     private userService: UserService,
     private afs: AngularFirestore,
@@ -113,6 +113,22 @@ export class ParticipantsComponent implements OnDestroy {
   ) { }
   participantFormVisible = false;
   participants = participants;
+
+  ngOnInit() {
+
+    this.subscription$.add(
+      this.removeParticipation$.pipe(
+        withLatestFrom(this.yearAndStageId$, this.userService.user$))
+        .subscribe(async ([_, { year, id }, user]): Promise<void> => {
+          try {
+            await this.afs.doc<Participant>(`years/${year}/stages/${id}/participants/${user!.uid}`).update({
+              cancelled: true
+            });
+          } catch(e) {
+            console.log('TODO')
+          }
+    }));
+  }
 
   ngOnDestroy() {
     this.subscription$.unsubscribe();
