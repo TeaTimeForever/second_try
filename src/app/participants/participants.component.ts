@@ -34,7 +34,7 @@ type JoinPurpose = 'login' | 'register' | 'join' | 'leave';
   </div>
   <div class="participate_option" *ngIf="joinButtonPurpose$ | async as purpose">
     <div class="good-luck" *ngIf="(joinButtonPurpose$ | async) === 'leave'">
-      Jūs esat veikmīgi piereģistrējušies uz sacensībam.
+      Jūs esat veikmīgi pieteicies uz sacensībam.
     </div>
     <button *ngIf="(joinButtonPurpose$ | async) !== 'leave'"
       (click)="joinToggleButtonClicks$.next()"
