@@ -19,6 +19,7 @@ import { ParticipantRowComponent } from './participants/participant-row/particip
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { MatDialogModule } from '@angular/material/dialog';
 import { LoginOptionsDialogComponent } from './login-options-dialog/login-options-dialog.component';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 @NgModule({
   declarations: [
@@ -44,6 +45,7 @@ import { LoginOptionsDialogComponent } from './login-options-dialog/login-option
     AngularFirestoreModule,
     NoopAnimationsModule,
     MatDialogModule,
+    MatSnackBarModule
   ],
   providers: [],
   bootstrap: [AppComponent],

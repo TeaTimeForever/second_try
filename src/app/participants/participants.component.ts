@@ -6,6 +6,7 @@ import { switchMap, distinctUntilChanged, map, withLatestFrom, first, startWith 
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Participant, HasId } from './participant.model';
 import { ActivatedRoute, Router } from '@angular/router';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 /** Depending on current state - the join button can trigger multiple possibilities login window, registration form, toggling to join for the competition, leaving the competition */
 type JoinPurpose = 'login' | 'register' | 'join' | 'leave';
@@ -103,16 +104,16 @@ export class ParticipantsComponent implements OnDestroy {
           break;
       }
     } catch (err) {
-      if (err.message === 'Atcelts') return;
-      alert(`Error: ${err.message}`);
+      this.snack.open(err.message, 'Aizvērt');
     }
   });
-  
+
   constructor(
     private userService: UserService,
     private afs: AngularFirestore,
     private activatedRoute: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private snack: MatSnackBar
   ) { }
   participantFormVisible = false;
   participants = participants;
@@ -127,10 +128,10 @@ export class ParticipantsComponent implements OnDestroy {
             await this.afs.doc<Participant>(`years/${year}/stages/${id}/participants/${user!.uid}`).update({
               cancelled: true
             });
-          } catch(e) {
+          } catch (e) {
             console.log('TODO')
           }
-    }));
+        }));
   }
 
   ngOnDestroy() {

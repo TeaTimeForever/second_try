@@ -3,6 +3,7 @@ import { UserService } from './user.service';
 import { Subject } from 'rxjs';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Stage } from './stage/stage.model';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-root',
@@ -44,14 +45,18 @@ export class AppComponent implements OnInit {
   loginClicked$ = new Subject();
   year = new Date().getFullYear();
 
-  constructor(private userService: UserService, private afs: AngularFirestore) { }
+  constructor(private userService: UserService, private afs: AngularFirestore, private snack: MatSnackBar) { }
 
   user$ = this.userService.user$;
   stages$ = this.afs.collection<Stage>(`years/${this.year}/stages`, q => q.orderBy('nr', 'asc')).valueChanges({ idField: 'id' })
 
   ngOnInit() {
-    this.loginClicked$.subscribe(() => {
-      this.userService.login().catch(() => { });
+    this.loginClicked$.subscribe(async () => {
+      try {
+        await this.userService.login();
+      } catch (err) {
+        this.snack.open(err.message, 'Aizvērt');
+      }
     });
 
     this.logoutClicked$.subscribe(async () => {
