@@ -11,11 +11,11 @@ export interface LoginOptionsDialogData {
   selector: 'app-login-options-dialog',
   template: `
     <div mat-dialog-content>
-      <div><button (click)="google()">Ielogoties ar Google</button></div>
-      <div><button (click)="fb()">Ielogoties ar Facebook</button></div>
+      <div><button class="loginbtn google" (click)="google()">Ielogoties ar Google</button></div>
+      <div><button class="loginbtn fb" (click)="fb()">Ielogoties ar Facebook</button></div>
     </div>
   `,
-  styles: []
+  styleUrls: ['./login-options-dialog.component.scss']
 })
 export class LoginOptionsDialogComponent {
   constructor(
