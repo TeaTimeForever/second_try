@@ -50,8 +50,8 @@ export class AppComponent implements OnInit {
   stages$ = this.afs.collection<Stage>(`years/${this.year}/stages`, q => q.orderBy('nr', 'asc')).valueChanges({ idField: 'id' })
 
   ngOnInit() {
-    this.loginClicked$.subscribe(async () => {
-      await this.userService.loginWithGoogle();
+    this.loginClicked$.subscribe(() => {
+      this.userService.login().catch(() => { });
     });
 
     this.logoutClicked$.subscribe(async () => {

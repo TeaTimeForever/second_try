@@ -2,7 +2,8 @@ import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { auth, User } from 'firebase/app';
 import { PilotProfile } from './userProfile/pilotProfile';
-import { AngularFirestore } from '@angular/fire/firestore';
+import { MatDialog } from '@angular/material/dialog';
+import { LoginOptionsDialogComponent, LoginOptionsDialogData } from './login-options-dialog/login-options-dialog.component';
 
 export type UserPublicData = Pick<PilotProfile, 'name' | 'surname' | 'wing' | 'wingClass' | 'gender'>;
 
@@ -13,12 +14,28 @@ export type UserPersonalData = Pick<PilotProfile, 'phone' | 'licenseId' | 'emerg
 })
 export class UserService {
 
-  constructor(private afAuth: AngularFireAuth, private afs: AngularFirestore) { }
+  constructor(
+    private afAuth: AngularFireAuth,
+    private dialog: MatDialog
+  ) { }
 
   user$ = this.afAuth.user;
 
+  login(): Promise<firebase.auth.UserCredential> {
+    return new Promise((resolve, reject) => {
+      const ref = this.dialog.open<LoginOptionsDialogComponent, LoginOptionsDialogData>(LoginOptionsDialogComponent, { width: '250px', height: '200px', data: { loginCallback: resolve, userService: this } });
+      ref.afterClosed().subscribe(() => {
+        reject(new Error('Atcelts'));
+      });
+    });
+  }
+
   loginWithGoogle() {
     return this.afAuth.signInWithPopup(new auth.GoogleAuthProvider());
+  }
+
+  loginWithFacebook() {
+    return this.afAuth.signInWithPopup(new auth.FacebookAuthProvider());
   }
 
   logout() {
