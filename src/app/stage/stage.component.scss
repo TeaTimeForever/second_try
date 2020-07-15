@@ -1,3 +1,4 @@
+@import '../../colors.scss';
 .stage-content {
   margin: 0 1em;
   .links {
@@ -6,21 +7,24 @@
     a {
       margin-right: 20px;
       text-decoration: none;
-    }
-    a.active-link {
-      text-decoration: underline;
+      color: $prime;
+      opacity: 0.8;
+      &.active-link {
+        font-weight: bold;
+        opacity: 0.9;
+      }
     }
     .registration {
       font-weight: 800;
       font-size: 0.8em;
-      color: forestgreen;
+      color: $success;
       outline: none;
       cursor: pointer;
     }
     .cancelled {
       font-weight: 800;
       font-size: 0.8em;
-      color: crimson;
+      color: $error;
     }
   }
   .post {
@@ -42,7 +46,7 @@
     }
   }
   .container {
-    max-width: 800px;
+    max-width: 860px;
   }
 }
 #google_map {

@@ -8,12 +8,12 @@ import { Stage } from './stage/stage.model';
   selector: 'app-root',
   template: `
   <div class="container center">
-  <nav class="nav sb">
-    <a class="nav-brand" href="">{{title}}</a>
+  <nav class="nav sb top-nav">
+    <a class="nav-brand" href="">{{title}} 2020</a>
     <ul>
-      <li *ngIf="!!(user$ | async) === false"><button (click)="loginClicked$.next()" class="btn btn-5 mt-1">Login</button></li>
-      <li *ngIf="user$ | async as user">{{user.displayName}}</li>
-      <li *ngIf="user$ | async"><button (click)="logoutClicked$.next()" class="btn btn-5 mt-1">Logout</button></li>
+      <li *ngIf="!!(user$ | async) === false"><button (click)="loginClicked$.next()" class="btn prime">Login</button></li>
+      <li class="user-name" *ngIf="user$ | async as user">{{user.displayName}}</li>
+      <li *ngIf="user$ | async"><button (click)="logoutClicked$.next()" class="btn secondary">Logout</button></li>
     </ul>
   </nav>
   

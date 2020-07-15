@@ -1,8 +1,21 @@
+@import '../colors.scss';
+
 .container {
   min-height: 100%;
   ul {
     display: flex;
     align-items: baseline;
+  }
+  .top-nav {
+    border-bottom: 3px solid $prime;
+    align-items: center;
+    .nav-brand {
+      color: $prime;
+    }
+    .user-name {
+      color: $dark-grey;
+      font-weight: bold;
+    }
   }
   .nav {
     padding: 0;
@@ -11,40 +24,46 @@
   }
 
   .stages {
+    margin-top: 1em;
+    align-items: baseline;
     @media only screen and (max-width: 600px) {
       flex-flow: wrap;
+    }
+    a {
+      color: $prime;
+      font-size: 1.2em;
     }
     .active-link {
       font-weight: bold;
     }
-  }
-
-  .disabled {
-    pointer-events: none;
-    cursor: default;
-    opacity: 0.6;
-  }
-
-  .cancelled {
-    text-decoration: line-through;
-  }
+    .disabled {
+      pointer-events: none;
+      cursor: default;
+      opacity: 0.6;
+    }
   
-  .blink {
-    animation: blink-animation 1s steps(5, start) infinite;
-  }
-  @keyframes blink-animation {
+    .cancelled {
+      text-decoration: line-through;
+    }
 
-    50% {
-      opacity: 0.5;
-      color: rgb(121, 219, 134);
+    .blink {
+      &::after {
+        content: "🚀";
+        animation: blink-animation 1s steps(5, start) infinite;
+      }
     }
-    75% {
-      color: rgb(24, 202, 24);
-    }
-    100% {
-      color: forestgreen;
+
+    @keyframes blink-animation {
+      50% {
+        opacity: 0.5;
+        color: $light-grey;
+      }
+      100% {
+        color: $prime;
+      }
     }
   }
+
 }
 
 footer {
