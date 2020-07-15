@@ -79,7 +79,7 @@ export class ParticipantsComponent implements OnDestroy {
   );
   joinButtonText$ = this.joinButtonPurpose$.pipe(
     startWith('join'),
-    map(purpose => purpose === "login" ? 'Ielogoties lai reģistrētos' :
+    map(purpose => purpose === "login" ? 'Ielogoties lai pieteiktos' :
       purpose === 'register' ? 'Reģistrēties' : 'join')
   );
   subscription$ = this.joinToggleButtonClicks$.pipe(

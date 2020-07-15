@@ -55,6 +55,7 @@ export class AppComponent implements OnInit {
       try {
         await this.userService.login();
       } catch (err) {
+        if (err.message === 'Atcelts') return;
         this.snack.open(err.message, 'Aizvērt');
       }
     });
