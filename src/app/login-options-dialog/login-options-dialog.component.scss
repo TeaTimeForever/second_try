@@ -1,17 +1,25 @@
+@import '../../colors.scss';
+
+::deep .mat-dialog-content {
+  margin: 0 auto;
+}
+
 .loginbtn {
-  text-indent: -999px;
-  margin: 5px;
+  margin: 1em;
   outline: none;
-  border: none;
+  width: 12em;
+  border: 1px solid $prime;
+  border-radius: 3px;
   cursor: pointer;
-  &.google {
-    background: url('../../assets/google_login.png');
-    width: 191px;
-    height: 46px;
-  }
-  &.fb {
-    background: url('../../assets/login_with_facebook.png');
-    width: 191px;
-    height: 40px;
+  background-color: $white-grey;
+  display: flex;
+  align-items: center;
+  color: $prime;
+  font-weight: bold;
+  img {
+    max-width: 2em;
+    max-height: 2em;
+    object-fit: contain;
+    margin-right: 1.5em;
   }
 }
