@@ -104,6 +104,7 @@ export class ParticipantsComponent implements OnDestroy {
           break;
       }
     } catch (err) {
+      if (err.message === 'Atcelts') return;
       this.snack.open(err.message, 'Aizvērt');
     }
   });
