@@ -6,7 +6,6 @@ import { switchMap, distinctUntilChanged, map, withLatestFrom, first, startWith 
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Participant, HasId } from './participant.model';
 import { ActivatedRoute, Router } from '@angular/router';
-import { start } from 'repl';
 
 /** Depending on current state - the join button can trigger multiple possibilities login window, registration form, toggling to join for the competition, leaving the competition */
 type JoinPurpose = 'login' | 'register' | 'join' | 'leave';
@@ -33,7 +32,10 @@ type JoinPurpose = 'login' | 'register' | 'join' | 'leave';
     <!--<a href="">download</a>-->
   </div>
   <div class="participate_option" *ngIf="joinButtonPurpose$ | async as purpose">
-    <button *ngIf=" (joinButtonPurpose$ | async) !== 'leave'"
+    <div class="good-luck" *ngIf="(joinButtonPurpose$ | async) === 'leave'">
+      Jūs esat veikmīgi piereģistrējušies uz sacensībam.
+    </div>
+    <button *ngIf="(joinButtonPurpose$ | async) !== 'leave'"
       (click)="joinToggleButtonClicks$.next()"
       class="btn prime">{{joinButtonText$ | async}}</button>
     <div class="join" *ngIf="(joinButtonPurpose$ | async) === 'join'">
