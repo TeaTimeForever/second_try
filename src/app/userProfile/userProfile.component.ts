@@ -139,15 +139,15 @@ export class UserProfileComponent implements OnInit, OnDestroy {
     takeUntil(this.unsubscribe$),
     filter(() => this.form.valid),
     map(UserService.extractPublicData),
+    debounceTime(2000),
     distinctUntilChanged(isEqual),
-    debounceTime(3000),
   );
   privateDataChanges: Observable<UserPersonalData> = this.form.valueChanges.pipe(
     takeUntil(this.unsubscribe$),
     filter(() => this.form.valid),
     map(UserService.extractPersonalData),
+    debounceTime(2000),
     distinctUntilChanged(isEqual),
-    debounceTime(3000),
   );
 
   ngOnInit() {
