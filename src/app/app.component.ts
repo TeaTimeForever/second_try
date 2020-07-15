@@ -9,6 +9,7 @@ import { Stage } from './stage/stage.model';
   template: `
   <div class="container center">
   <nav class="nav sb top-nav">
+    <!--a class="nav-brand" href="">{{title}} 2020</!--a-->
     <a class="nav-brand" href="">{{title}} 2020</a>
     <ul>
       <li *ngIf="!!(user$ | async) === false"><button (click)="loginClicked$.next()" class="btn prime">Login</button></li>
