@@ -136,16 +136,18 @@ export class UserProfileComponent implements OnInit, OnDestroy {
   form = this.fb.group(PilotProfile, new PilotProfile());
 
   publicDataChanges: Observable<UserPublicData> = this.form.valueChanges.pipe(
+    takeUntil(this.unsubscribe$),
     filter(() => this.form.valid),
     map(UserService.extractPublicData),
     distinctUntilChanged(isEqual),
-    debounceTime(1500),
+    debounceTime(3000),
   );
   privateDataChanges: Observable<UserPersonalData> = this.form.valueChanges.pipe(
+    takeUntil(this.unsubscribe$),
     filter(() => this.form.valid),
     map(UserService.extractPersonalData),
     distinctUntilChanged(isEqual),
-    debounceTime(1500),
+    debounceTime(3000),
   );
 
   ngOnInit() {
@@ -186,14 +188,12 @@ export class UserProfileComponent implements OnInit, OnDestroy {
 
     // Send updates to firebase as user types in form
     this.publicDataChanges.pipe(
-      takeUntil(this.unsubscribe$),
       withLatestFrom(this.user.user$)
     ).subscribe(([data, user]) => {
       this.afs.doc<UserPublicData>(`users/${user!.uid}`).set(data);
     });
 
     this.privateDataChanges.pipe(
-      takeUntil(this.unsubscribe$),
       withLatestFrom(this.user.user$)
     ).subscribe(([data, user]) => {
       this.afs.doc<UserPersonalData>(`users/${user!.uid}/personal/contacts`).set(data);
