@@ -29,11 +29,11 @@ export class LoginOptionsDialogComponent {
   fb() {
     const p = this.data.userService.loginWithFacebook();
     this.data.loginCallback(p);
-    p.then(() => this.dialogRef.close());
+    p.finally(() => this.dialogRef.close());
   }
   google() {
     const p = this.data.userService.loginWithGoogle();
     this.data.loginCallback(p);
-    p.then(() => this.dialogRef.close());
+    p.finally(() => this.dialogRef.close());
   }
 }
