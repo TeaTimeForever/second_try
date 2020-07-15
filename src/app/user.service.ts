@@ -7,7 +7,7 @@ import { LoginOptionsDialogComponent, LoginOptionsDialogData } from './login-opt
 
 export type UserPublicData = Pick<PilotProfile, 'name' | 'surname' | 'wing' | 'wingClass' | 'gender'>;
 
-export type UserPersonalData = Pick<PilotProfile, 'phone' | 'licenseId' | 'emergencyContactName' | 'emergencyContactPhone'>
+export type UserPersonalData = Pick<PilotProfile, 'phone' | 'licenseId' | 'emergencyContactName' | 'emergencyContactPhone' | 'licenseCategory'>
 
 @Injectable({
   providedIn: 'root'
@@ -46,8 +46,8 @@ export class UserService {
     return { name, surname, wing, wingClass, gender };
   }
 
-  static extractPersonalData({ phone, licenseId, emergencyContactName, emergencyContactPhone }: PilotProfile): UserPersonalData {
-    return { phone, licenseId, emergencyContactName, emergencyContactPhone };
+  static extractPersonalData({ phone, licenseId, emergencyContactName, emergencyContactPhone, licenseCategory }: PilotProfile): UserPersonalData {
+    return { phone, licenseId, emergencyContactName, emergencyContactPhone, licenseCategory };
   }
 
   static initializeUserFromAuth({ displayName, phoneNumber }: User): PilotProfile {
@@ -59,6 +59,7 @@ export class UserService {
       phone: phoneNumber || '',
       emergencyContactName: '',
       emergencyContactPhone: '',
+      licenseCategory: 'B',
       licenseId: '',
       wing: '',
       wingClass: 'A',

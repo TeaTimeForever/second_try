@@ -1,3 +1,5 @@
+@import '../../colors.scss';
+
 :host {
   display: flex;
   a {
@@ -32,6 +34,9 @@
         label {
           margin: 0.5em;
         }
+      }
+      .good-luck {
+        color: $prime;
       }
     }
   }

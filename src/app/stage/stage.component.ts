@@ -47,10 +47,8 @@ const mapLoaderOptions: MapLoaderOptions = {
     <router-outlet style="display: none"></router-outlet>
     <div [ngClass]="{hidden: areParticipantsOpen}">
       <div class="post" [innerHtml]="description$ | async"></div>
-
       <div class="details" [ngClass]="{hidden: stage.status ==='cancelled'}">
         <div id="google_map"></div>
-
           <table class="info">
             <tr>
               <td class="part">Cena</td>
