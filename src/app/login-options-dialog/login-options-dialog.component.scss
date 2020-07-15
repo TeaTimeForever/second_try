@@ -1,0 +1,17 @@
+.loginbtn {
+  text-indent: -999px;
+  margin: 5px;
+  outline: none;
+  border: none;
+  cursor: pointer;
+  &.google {
+    background: url('../../assets/google_login.png');
+    width: 191px;
+    height: 46px;
+  }
+  &.fb {
+    background: url('../../assets/login_with_facebook.png');
+    width: 191px;
+    height: 40px;
+  }
+}

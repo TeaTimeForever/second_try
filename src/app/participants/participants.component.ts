@@ -87,7 +87,7 @@ export class ParticipantsComponent implements OnDestroy {
     try {
       switch (purpose) {
         case 'login':
-          await this.userService.loginWithGoogle()
+          await this.userService.login();
           await this.router.navigate(['/personal'], { queryParams: { year, stage: id } })
           break;
         case 'register':
@@ -103,6 +103,7 @@ export class ParticipantsComponent implements OnDestroy {
           break;
       }
     } catch (err) {
+      if (err.message === 'Atcelts') return;
       alert(`Error: ${err.message}`);
     }
   });
