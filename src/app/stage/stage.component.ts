@@ -50,12 +50,22 @@ const mapLoaderOptions: MapLoaderOptions = {
 
       <div class="details" [ngClass]="{hidden: stage.status ==='cancelled'}">
         <div id="google_map"></div>
-        <div class="info" >
-          <div>Cena: {{stage.fee}}</div>
-          <div>Datums: {{formatDate(stage.date)}}</div>
-          <div>Vieta: {{stage.place}}</div>
-          <div>{{stage.description}}</div>
-        </div>
+
+          <table class="info">
+            <tr>
+              <td class="part">Cena</td>
+              <td>{{stage.fee}}</td>
+            </tr>
+            <tr>
+              <td class="part">Datums</td>
+              <td>{{formatDate(stage.date)}}</td>
+            </tr>
+            <tr>
+              <td class="part">Vieta</td>
+              <td>{{stage.place}}</td>
+            </tr>
+          </table>
+
       </div>
     </div>
   </div>

@@ -38,10 +38,14 @@
       flex-flow: column-reverse;
     }
     .info {
-      display: flex;
-      flex-direction: column;
-      div {
-        margin-bottom: 1em;
+      .part {
+        width: 4em;
+        font-weight: bold;
+        color: $dark-grey
+      }
+      td {
+        margin: 0.5em 0.5em;
+        display: inline-block;
       }
     }
   }
