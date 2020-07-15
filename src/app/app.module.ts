@@ -16,6 +16,9 @@ import { RegulationsComponent } from './regulations/regulations.component';
 import { PrivacyComponent } from './privacy/privacy.component';
 import { TermsOfServcieComponent } from './terms-of-servcie/terms-of-servcie.component';
 import { ParticipantRowComponent } from './participants/participant-row/participant-row.component';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { MatDialogModule } from '@angular/material/dialog';
+import { LoginOptionsDialogComponent } from './login-options-dialog/login-options-dialog.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +30,8 @@ import { ParticipantRowComponent } from './participants/participant-row/particip
     RegulationsComponent,
     PrivacyComponent,
     TermsOfServcieComponent,
-    ParticipantRowComponent
+    ParticipantRowComponent,
+    LoginOptionsDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -38,9 +42,11 @@ import { ParticipantRowComponent } from './participants/participant-row/particip
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireAuthModule,
     AngularFirestoreModule,
-
+    NoopAnimationsModule,
+    MatDialogModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
+  entryComponents: [LoginOptionsDialogComponent]
 })
 export class AppModule { }

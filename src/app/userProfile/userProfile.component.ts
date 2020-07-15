@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { DynamicFormBuilder } from 'ngx-dynamic-form-builder';
 import { PilotProfile } from './pilotProfile';
-import { Subject, zip, EMPTY, Observable } from 'rxjs';
+import { Subject, zip, Observable } from 'rxjs';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { takeUntil, map, switchMap, distinctUntilChanged, debounceTime, withLatestFrom, filter, catchError, tap } from 'rxjs/operators';
 import { ActivatedRoute, Router } from '@angular/router';
