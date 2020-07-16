@@ -23,7 +23,7 @@ type JoinPurpose = 'login' | 'register' | 'join' | 'leave';
     <table class="tab">
     <tbody><tr>
       <th>Nr.</th>
-      <th>Name</th>
+      <th>Vārds</th>
     </tr>
     <tr app-participant-row *ngFor="let p of participantList$ | async; let i = index; trackBy: trackById"
       [nr]="i+1"

@@ -51,19 +51,22 @@ const mapLoaderOptions: MapLoaderOptions = {
         <div id="google_map"></div>
           <table class="info">
             <tr>
-              <td class="part">Cena</td>
+              <td class="part">Dalības maksa</td>
               <td>{{stage.fee}}</td>
             </tr>
             <tr>
+              <td class="part">Par retrīvu</td>
+              <td>{{stage.retrieve}}</td>
+            </tr>
+            <tr>
               <td class="part">Datums</td>
-              <td>{{formatDate(stage.date)}}</td>
+              <td>2020 g. 18., 19. jūlijs </td>
             </tr>
             <tr>
               <td class="part">Vieta</td>
               <td>{{stage.place}}</td>
             </tr>
           </table>
-
       </div>
     </div>
   </div>

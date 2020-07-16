@@ -11,4 +11,5 @@ export interface Stage {
   description: string;
   /** The participation fee (price) */
   fee: string;
+  retrieve: string;
 }
