@@ -7,13 +7,13 @@ import { map } from 'rxjs/operators';
 @Component({
   selector: '[app-participant-row]',
   template: `
-    <ng-container *ngIf="participant$ | async as p">
-      <td>{{nr}}</td>
-      <td>{{p.name}} {{p.surname}}</td>
-      <td  class="manage-registration" *ngIf="userId$ | async as uId">
-        <div *ngIf="participantId === uId" (click)="removeUser.next()"><img src="./assets/recycle.png" alt="Atteikties"></div>
-      </td>
-    </ng-container>
+    <span *ngIf="participant$ | async as p">{{p.name}} {{p.surname}}</span>
+    <div *ngIf="userId$ | async as uId" class="manage-registration">
+      <img *ngIf="participantId === uId"
+          (click)="removeUser.next()"
+          src="./assets/recycle.png"
+          alt="Atteikties">
+    </div>
   `,
   styleUrls: ['./participant-row.component copy.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush

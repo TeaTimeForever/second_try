@@ -43,9 +43,10 @@ const mapLoaderOptions: MapLoaderOptions = {
       <div *ngIf="stage.status ==='ongoing'" class="registration" routerLink="participants">Notiek reģistrācija</div>
       <div *ngIf="stage.status ==='cancelled'" class="cancelled">Atcelts</div>
     </div>
-    <h1>{{title$ | async}}</h1>
+    
     <router-outlet style="display: none"></router-outlet>
     <div [ngClass]="{hidden: areParticipantsOpen}">
+      <h2>{{title$ | async}}</h2>
       <div class="post" [innerHtml]="description$ | async"></div>
       <div class="details" [ngClass]="{hidden: stage.status ==='cancelled'}">
         <div id="google_map"></div>

@@ -19,19 +19,10 @@ type JoinPurpose = 'login' | 'register' | 'join' | 'leave';
                  (deactivate)="participantFormVisible=false"
                  style="display: none"></router-outlet>
   <div class="content" *ngIf="!participantFormVisible">
-  <div class="table_wrap">
-    <table class="tab">
-    <tbody><tr>
-      <th>Nr.</th>
-      <th>Vārds</th>
-    </tr>
-    <tr app-participant-row *ngFor="let p of participantList$ | async; let i = index; trackBy: trackById"
-      [nr]="i+1"
-      [participantId]="p.id"
-      (removeUser)="removeParticipation$.next()"></tr>
-    </tbody></table>
-    <!--<a href="">download</a>-->
-  </div>
+  <ul><li app-participant-row *ngFor="let p of participantList$ | async; let i = index; trackBy: trackById"
+          [nr]="i+1"
+          [participantId]="p.id"
+          (removeUser)="removeParticipation$.next()"></li></ul>
   <div class="participate_option" *ngIf="joinButtonPurpose$ | async as purpose">
     <div class="good-luck" *ngIf="(joinButtonPurpose$ | async) === 'leave'">
       Jūs esat veikmīgi pieteicies uz sacensībam.
