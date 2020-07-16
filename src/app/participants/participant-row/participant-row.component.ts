@@ -11,7 +11,7 @@ import { map } from 'rxjs/operators';
     <div *ngIf="userId$ | async as uId" class="manage-registration">
       <img *ngIf="participantId === uId"
           (click)="removeUser.next()"
-          src="./assets/recycle.png"
+          src="./assets/cloud-off.png"
           alt="Atteikties">
     </div>
   `,
