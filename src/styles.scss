@@ -4,15 +4,26 @@ html, body {
   height: 100%;
   margin: 0;
 }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
 .btn.prime {
   background-color: $prime;
   color: $white-grey;
+  &:hover {
+    opacity: 0.9;
+  }
 }
 
 .btn.secondary {
   background-color: $grey;
   color: $light-grey;
+  &:hover {
+    opacity: 0.9;
+  }
 }
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+a {
+  &:hover {
+    opacity: 0.8;
+  }
+}

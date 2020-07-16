@@ -11,11 +11,10 @@ export interface LoginOptionsDialogData {
   selector: 'app-login-options-dialog',
   template: `
     <div mat-dialog-content>
-      <h2>Ielogoties</h2>
-      <div><button class="loginbtn" (click)="google()">
-        <img src="./assets/google.png" alt="">ar Google</button></div>
-      <div><button class="loginbtn" (click)="fb()">
-        <img src="./assets/fb.png"  alt="">ar Facebook</button></div>
+      <div><button class="loginbtn google" (click)="google()">
+        <img src="./assets/google.png" alt="">Ielogoties ar Google</button></div>
+      <div><button class="loginbtn fb" (click)="fb()">
+        <img src="./assets/fb.png"  alt="">Ielogoties ar Facebook</button></div>
     </div>
   `,
   styleUrls: ['./login-options-dialog.component.scss']

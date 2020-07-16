@@ -23,7 +23,9 @@ export class UserService {
 
   login(): Promise<firebase.auth.UserCredential> {
     return new Promise((resolve, reject) => {
-      const ref = this.dialog.open<LoginOptionsDialogComponent, LoginOptionsDialogData>(LoginOptionsDialogComponent, { width: '250px', height: '200px', data: { loginCallback: resolve, userService: this } });
+      const ref = this.dialog.open<LoginOptionsDialogComponent, LoginOptionsDialogData>(
+        LoginOptionsDialogComponent,
+        { width: '300px', height: 'fit-content', data: { loginCallback: resolve, userService: this } });
       ref.afterClosed().subscribe(() => {
         reject(new Error('Atcelts'));
       });
