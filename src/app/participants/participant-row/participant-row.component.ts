@@ -2,8 +2,7 @@ import { Component, OnInit, ChangeDetectionStrategy, Input, Output } from '@angu
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Observable, Subject } from 'rxjs';
 import { UserPublicData, UserService } from 'src/app/user.service';
-import { map, withLatestFrom } from 'rxjs/operators';
-import { Participant } from '../participant.model';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: '[app-participant-row]',
