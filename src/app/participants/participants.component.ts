@@ -106,7 +106,7 @@ export class ParticipantsComponent implements OnDestroy {
   });
 
   constructor(
-    private userService: UserService,
+    public userService: UserService,
     private afs: AngularFirestore,
     private activatedRoute: ActivatedRoute,
     private router: Router,
