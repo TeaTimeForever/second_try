@@ -204,7 +204,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
     this.privateDataChanges.pipe(
       withLatestFrom(this.user.user$)
     ).subscribe(([data, user]) => {
-      this.afs.doc<UserPersonalData>(`users/${user!.uid}/personal/contacts`).set(data);
+      this.afs.doc<UserPersonalData>(`users/${user!.uid}/personal/contacts`).set(data, { merge: true });
     });
   }
 

@@ -1,12 +1,13 @@
 import { Component, OnDestroy } from '@angular/core';
 import { participants } from '../participants.mock';
-import { Subject, Observable, of } from 'rxjs';
-import { UserService, UserPublicData } from '../user.service';
-import { switchMap, distinctUntilChanged, map, withLatestFrom, first, startWith } from 'rxjs/operators';
+import { Subject, Observable, of, zip } from 'rxjs';
+import { UserService, UserPublicData, UserPersonalData } from '../user.service';
+import { switchMap, distinctUntilChanged, map, withLatestFrom, first, startWith, takeUntil } from 'rxjs/operators';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Participant, HasId } from './participant.model';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { unparse } from 'papaparse';
 
 /** Depending on current state - the join button can trigger multiple possibilities login window, registration form, toggling to join for the competition, leaving the competition */
 type JoinPurpose = 'login' | 'register' | 'join' | 'leave';
@@ -33,6 +34,10 @@ type JoinPurpose = 'login' | 'register' | 'join' | 'leave';
     <div class="join" *ngIf="(joinButtonPurpose$ | async) === 'join'">
       <label><input type="checkbox" [(ngModel)]="retrieveNeeded" />Būs nepieciešams retrīvs</label>
       <label><input type="checkbox" [(ngModel)]="firstTry" />Šī būs mana pirmā dalība XCKausā</label>
+    </div>
+    <div *ngIf="userService.isAdmin$ | async">
+      <button (click)="downloadFile(downloadHelper)">Lejupielādēt kā tabulu</button>
+      <a class="downloadHelperA" #downloadHelper>A link used to trigger download</a>
     </div>
   </div>
 </div>
@@ -134,7 +139,33 @@ export class ParticipantsComponent implements OnDestroy {
     return id;
   }
 
-  downloadFile(data: Response) {
+  downloadFile(a: HTMLElement) {
     // todo: prepare file and download it; should be available only for granted
+    this.participantList$.pipe(
+      first(),
+      switchMap(users =>
+        Promise.all(users.map(userParticipation => Promise.all([
+          this.afs.firestore.doc(`users/${userParticipation.id}`).get(),
+          this.afs.firestore.doc(`users/${userParticipation.id}/personal/contacts`).get()
+        ]).then(([publicData, privateData]) => ({
+          ...userParticipation,
+          ...publicData.data(),
+          ...privateData.data()
+        }))))
+      )).subscribe({
+        next(data) {
+          const url = window.URL.createObjectURL(new Blob([unparse(data, {
+            header: true,
+            columns: ['name', 'surname', 'wing', 'wingClass', 'gender', 'phone', 'licenseId', 'emergencyContactName', 'emergencyContactPhone', 'licenseCategory', 'isFirstCompetition', 'isRetrieveNeeded']
+          })], { type: 'text/csv' }));
+          a.setAttribute('href', url);
+          a.setAttribute('download', 'participants.csv');
+          a.click();
+          window.URL.revokeObjectURL(url);
+        },
+        error: e => {
+          this.snack.open(e.message, 'Aizvērt');
+        }
+      });
   }
 }
