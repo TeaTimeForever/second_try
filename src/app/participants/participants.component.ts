@@ -143,8 +143,8 @@ export class ParticipantsComponent implements OnDestroy {
     // todo: prepare file and download it; should be available only for granted
     this.participantList$.pipe(
       first(),
-      switchMap(users => {
-        return Promise.all(users.map(userParticipation => Promise.all([
+      switchMap(users =>
+        Promise.all(users.map(userParticipation => Promise.all([
           this.afs.firestore.doc(`users/${userParticipation.id}`).get(),
           this.afs.firestore.doc(`users/${userParticipation.id}/personal/contacts`).get()
         ]).then(([publicData, privateData]) => ({
@@ -152,23 +152,20 @@ export class ParticipantsComponent implements OnDestroy {
           ...publicData.data(),
           ...privateData.data()
         }))))
-      }
-
-      )
-    ).subscribe({
-      next(data) {
-        const url = window.URL.createObjectURL(new Blob([unparse(data, {
-          header: true,
-          columns: ['name', 'surname', 'wing', 'wingClass', 'gender', 'phone', 'licenseId', 'emergencyContactName', 'emergencyContactPhone', 'licenseCategory', 'isFirstCompetition', 'isRetrieveNeeded']
-        })], { type: 'text/csv' }));
-        a.setAttribute('href', url);
-        a.setAttribute('download', 'participants.csv');
-        a.click();
-        window.URL.revokeObjectURL(url);
-      },
-      error: e => {
-        this.snack.open(e.message, 'Aizvērt');
-      }
-    });
+      )).subscribe({
+        next(data) {
+          const url = window.URL.createObjectURL(new Blob([unparse(data, {
+            header: true,
+            columns: ['name', 'surname', 'wing', 'wingClass', 'gender', 'phone', 'licenseId', 'emergencyContactName', 'emergencyContactPhone', 'licenseCategory', 'isFirstCompetition', 'isRetrieveNeeded']
+          })], { type: 'text/csv' }));
+          a.setAttribute('href', url);
+          a.setAttribute('download', 'participants.csv');
+          a.click();
+          window.URL.revokeObjectURL(url);
+        },
+        error: e => {
+          this.snack.open(e.message, 'Aizvērt');
+        }
+      });
   }
 }
