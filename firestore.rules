@@ -14,7 +14,14 @@ service cloud.firestore {
       allow get;
       allow read, create, update: if request.auth != null && request.auth.uid == uid;
       match /personal/contacts {
-        allow read, create, update: if request.auth != null && request.auth.uid == uid;
+        allow update: if request.auth != null &&
+          request.auth.uid == uid &&
+          request.resource.data.isAdmin == resource.data.isAdmin;
+        allow create: if request.auth != null &&
+          request.auth.uid == uid &&
+          !('isAdmin' in request.resource.data);
+        allow get;
+        allow get: if request.auth != null && (request.auth.uid == uid || get(/databases/$(database)/users/$(request.auth.uid)/personal/contacts).data.isAdmin == true);
       }
     }
   }
