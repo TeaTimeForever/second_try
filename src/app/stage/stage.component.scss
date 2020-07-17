@@ -1,6 +1,49 @@
 @import '../../colors.scss';
 .stage-content {
   margin: 0 1em;
+  .stages {
+    margin-top: 1em;
+    padding: 0;
+    background-color: white;
+    color: black;
+    align-items: baseline;
+    @media only screen and (max-width: 600px) {
+      flex-flow: wrap;
+    }
+    a {
+      color: $dark-grey;
+      padding: 0.4em;
+      font-size: 1.2em;
+      &.active-link {
+        font-weight: bold;
+      }
+      &.disabled {
+        pointer-events: none;
+        cursor: default;
+        opacity: 0.6;
+      }
+      &.cancelled {
+        text-decoration: line-through;
+      }
+      &.blink {
+        &::after {
+          content: "🚀";
+          animation: blink-animation 1s steps(5, start) infinite;
+        }
+      }
+    }
+    
+
+    @keyframes blink-animation {
+      50% {
+        opacity: 0.5;
+        color: $light-grey;
+      }
+      100% {
+        color: $prime;
+      }
+    }
+  }
   .links {
     display: flex;
     align-items: baseline;

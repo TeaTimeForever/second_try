@@ -33,7 +33,16 @@ const mapLoaderOptions: MapLoaderOptions = {
   selector: 'app-stage',
   template: `
 <div class="stage-content" >
-
+  <nav class="nav stages">
+  <li *ngFor="let stage of stages$ | async">
+    <a [ngClass]="{blink: stage.status === 'ongoing',
+                   disabled: stage.status === 'announced',
+                   cancelled: stage.status === 'cancelled'
+                  }"
+       routerLinkActive="active-link"
+       [routerLink]="['/stage', year, stage.id]">{{stage.nr}}. posms</a>
+  </li>
+  </nav>
   <div class="container center" *ngIf="stage$ | async as stage">
     <div class="links">
       <a routerLink="./"
@@ -79,6 +88,8 @@ export class StageComponent implements OnInit, OnDestroy {
   yearAndStageId$ = (this.activeRoute.params as Observable<{ year: string, id: string }>).pipe(
     distinctUntilChanged((a, b) => a.year === b.year && a.id === b.id)
   );
+  year = new Date().getFullYear();
+  stages$ = this.afs.collection<Stage>(`years/${this.year}/stages`, q => q.orderBy('nr', 'asc')).valueChanges({ idField: 'id' })
   stage$ = this.yearAndStageId$.pipe(
     switchMap(({ year, id }) =>
       this.afs.doc<Stage>(`years/${year}/stages/${id}`).valueChanges().pipe(

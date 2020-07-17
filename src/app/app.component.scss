@@ -1,65 +1,95 @@
 @import '../colors.scss';
 
 .container {
+  padding: 0;
+  margin: 0;
   min-height: 100%;
   ul {
     display: flex;
     align-items: baseline;
   }
   .top-nav {
-    border-bottom: 3px solid $prime;
+    border-bottom: 3px solid white;
     align-items: center;
+    padding: 0;
+    width: 100%;
     .nav-brand {
       color: $prime;
-    }
-    .user-name {
-      color: $dark-grey;
-      font-weight: bold;
-    }
-  }
-  .nav {
-    padding: 0;
-    background-color: white;
-    color: black;
-  }
-
-  .stages {
-    margin-top: 1em;
-    align-items: baseline;
-    @media only screen and (max-width: 600px) {
-      flex-flow: wrap;
-    }
-    a {
-      color: $prime;
-      padding: 0.4em;
-      font-size: 1.2em;
-      &.active-link {
-        font-weight: bold;
-      }
-      &.disabled {
-        pointer-events: none;
-        cursor: default;
-        opacity: 0.6;
-      }
-      &.cancelled {
-        text-decoration: line-through;
-      }
-      &.blink {
-        &::after {
-          content: "🚀";
-          animation: blink-animation 1s steps(5, start) infinite;
+      background-color: white;
+      padding: 0;
+      max-height: 3.5em;
+      &::before {
+        display: block;
+        content: "";
+        z-index: 1;
+        width: 2em;
+        @media only screen and (max-width: 600px) {
+          width: 0;
         }
       }
-    }
-    
-
-    @keyframes blink-animation {
-      50% {
-        opacity: 0.5;
-        color: $light-grey;
+      &::after {
+        display: block;
+        content: "";
+        z-index: 1;
+        border-bottom: 30px solid white;
+        border-left: 12px solid white;
+        border-top: 30px solid white;
+        border-right: 12px solid white;
       }
-      100% {
+      img {
+        max-height: 3em;
+        object-fit: contain;
+      }
+    }
+    .middle {
+      display: flex;
+      align-items: center;
+      width: 100%;
+      height: 3.7em;
+      margin: 0;
+      background: linear-gradient(90deg, white 0%, $light-grey 100%);
+      a {
+        font-size: 1.2em;
         color: $prime;
+        text-transform: uppercase;
+        @media only screen and (max-width: 600px) {
+          font-size: 0.7em;
+        }
+      }
+      .active-link {
+        font-weight: bold;
+      }
+      
+    }
+    .auth {
+      max-height: 3.7em;
+      width: 35%;
+      padding: 0;
+      background: $prime;
+      display: flex;
+      align-items: center;
+      &::before {
+        display: block;
+        content: "";
+        z-index: 1;
+        border-bottom: 30px solid $prime;
+        border-left: 10px solid  $light-grey ;
+        border-top: 30px solid  $light-grey;
+        border-right: 10px solid  $prime;
+      }
+      .user-name {
+        color: $light-grey;
+        font-weight: bold;
+        width: 100%;
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+        span {
+          color: $light-grey; 
+          @media only screen and (max-width: 600px) {
+            display: none;
+          }
+        }
       }
     }
   }

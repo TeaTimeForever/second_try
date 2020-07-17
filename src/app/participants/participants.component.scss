@@ -51,6 +51,7 @@ ul {
   counter-reset: index;  
   padding: 0;
   max-width: 300px;
+  transform: translate3d(0, 0, 0);
 }
 
 /* List element */
@@ -71,9 +72,9 @@ li::before {
   min-width: 50px;
   font-variant-numeric: tabular-nums;
   align-self: flex-start;
-  background-image: linear-gradient(to bottom,$white-grey, $prime);
+  background-image: linear-gradient(to bottom,$light-grey, $prime);
   background-attachment: fixed;
-  -webkit-background-clip: text;
+  background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 

@@ -6,20 +6,24 @@ html, body {
 }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
-.btn.prime {
-  background-color: $prime;
-  color: $white-grey;
+.btn {
   &:hover {
     opacity: 0.9;
   }
+}
+.btn.prime {
+  background-color: $prime;
+  color: $white-grey;
+  
+}
+.btn.prime-inv {
+  background-color: $white-grey;
+  color: $prime;
 }
 
 .btn.secondary {
   background-color: $grey;
   color: $light-grey;
-  &:hover {
-    opacity: 0.9;
-  }
 }
 
 a {
