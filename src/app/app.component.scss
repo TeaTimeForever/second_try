@@ -2,14 +2,14 @@
 
 .container {
   padding: 0;
-  margin: 0;
+  margin: 0; 
   min-height: 100%;
   ul {
     display: flex;
     align-items: baseline;
   }
   .top-nav {
-    border-bottom: 3px solid white;
+    background-color: transparent;
     align-items: center;
     padding: 0;
     width: 100%;
@@ -31,9 +31,9 @@
         display: block;
         content: "";
         z-index: 1;
-        border-bottom: 30px solid white;
+        border-bottom: 24px solid white;
         border-left: 12px solid white;
-        border-top: 30px solid white;
+        border-top: 24px solid white;
         border-right: 12px solid white;
       }
       img {
@@ -62,20 +62,19 @@
       
     }
     .auth {
-      max-height: 3.7em;
+      height: 3.7em;
       width: 35%;
       padding: 0;
       background: $prime;
       display: flex;
       align-items: center;
-      border-bottom: 3px solid $prime;
       &::before {
         display: block;
         content: "";
         z-index: 1;
-        border-bottom: 30px solid $prime;
+        border-bottom: 1.8em solid $prime;
         border-left: 10px solid  $light-grey ;
-        border-top: 30px solid  $light-grey;
+        border-top: 1.9em solid  $light-grey;
         border-right: 10px solid  $prime;
       }
       .user-name {
@@ -95,7 +94,6 @@
       }
     }
   }
-
 }
 
 footer {
