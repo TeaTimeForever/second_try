@@ -13,7 +13,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
     <div class="middle">
       <a [routerLink]="['/regulations']"  routerLinkActive="active-link">Nolikums</a>
       <!--a [routerLink]="['/controlpoints']"  routerLinkActive="active-link">Kontrolpunkti</a-->
-      <a [routerLink]="['/stage', 2020, 6]"  routerLinkActive="active-link">Sacensību sezons</a>
+      <a [routerLink]="['/stage', 2020, 6]"  routerLinkActive="active-link">Sacensību sezona</a>
       <!--a [routerLink]="['/organisators']"  routerLinkActive="active-link">Organizatori</a-->
     </div>
     <div class="auth">

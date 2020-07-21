@@ -68,6 +68,7 @@
       background: $prime;
       display: flex;
       align-items: center;
+      border-bottom: 3px solid $prime;
       &::before {
         display: block;
         content: "";
@@ -78,9 +79,10 @@
         border-right: 10px solid  $prime;
       }
       .user-name {
+        height: 100%;
+        width: 100%;
         color: $light-grey;
         font-weight: bold;
-        width: 100%;
         display: flex;
         justify-content: flex-end;
         align-items: center;

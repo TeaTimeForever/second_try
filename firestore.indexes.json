@@ -2,6 +2,20 @@
   "indexes": [
     {
       "collectionGroup": "stages",
+      "queryScope": "COLLECTION_GROUP",
+      "fields": [
+        {
+          "fieldPath": "status",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "nr",
+          "order": "DESCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "stages",
       "queryScope": "COLLECTION",
       "fields": [
         {
