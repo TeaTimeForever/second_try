@@ -1,0 +1,36 @@
+@import '../../colors.scss';
+
+h2 {
+  padding-top: 2em;
+  padding-bottom: 0em;
+}
+.results {
+  border: 0;
+  margin-bottom: 1em;
+  th {
+    color: $dark-grey;
+  }
+  th, td {
+    padding-top: 0.5em;
+    text-align: center;
+    padding-right: 1em;
+  }
+}
+.openClass {
+  h2 { color: $prime; }
+  tr:nth-child(2) { background-color: unquote($prime + "80"); }
+  tr:nth-child(3) { background-color: unquote($prime + "4D"); }
+  tr:nth-child(4) { background-color: unquote($prime + "33"); }
+}
+.standardClass {
+  h2 { color: $success; }
+  tr:nth-child(2) { background-color: unquote($success + "80"); }
+  tr:nth-child(3) { background-color: unquote($success + "4D"); }
+  tr:nth-child(4) { background-color: unquote($success + "33"); }
+}
+.womenClass {
+  h2 { color: $accent; }
+  tr:nth-child(2) { background-color: unquote($accent + "80"); }
+  tr:nth-child(3) { background-color: unquote($accent + "4D"); }
+  tr:nth-child(4) { background-color: unquote($accent + "33"); }
+}

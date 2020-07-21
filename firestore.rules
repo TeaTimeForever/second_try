@@ -10,6 +10,7 @@ service cloud.firestore {
         match /participants/{participant} {
           allow read;
           allow create, update: if request.auth != null && request.auth.uid == participant;
+          allow update: if request.auth != null && get(/databases/$(database)/documents/users/$(request.auth.uid)/personal/contacts).data.isAdmin == true;
         }
       }
     }

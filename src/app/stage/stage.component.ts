@@ -49,6 +49,7 @@ const mapLoaderOptions: MapLoaderOptions = {
          routerLinkActive="active-link"
          [routerLinkActiveOptions]="{exact:true  }">#info</a> 
       <a routerLink="participants" routerLinkActive="active-link" *ngIf="stage.status !=='cancelled'" >#dalībnieki</a>
+      <a routerLink="results" routerLinkActive="active-link" *ngIf="stage.status ==='finished'" >#rezultāti</a>
       <div *ngIf="stage.status ==='ongoing'" class="registration" routerLink="participants">Notiek reģistrācija</div>
       <div *ngIf="stage.status ==='cancelled'" class="cancelled">Atcelts</div>
     </div>

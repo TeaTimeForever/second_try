@@ -20,6 +20,7 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { MatDialogModule } from '@angular/material/dialog';
 import { LoginOptionsDialogComponent } from './login-options-dialog/login-options-dialog.component';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { StageResultsComponent } from './stage-results/stage-results.component';
 
 @NgModule({
   declarations: [
@@ -32,7 +33,8 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
     PrivacyComponent,
     TermsOfServcieComponent,
     ParticipantRowComponent,
-    LoginOptionsDialogComponent
+    LoginOptionsDialogComponent,
+    StageResultsComponent
   ],
   imports: [
     BrowserModule,
@@ -42,7 +44,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
     // firebase
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireAuthModule,
-    AngularFirestoreModule,
+    AngularFirestoreModule.enablePersistence(),
     NoopAnimationsModule,
     MatDialogModule,
     MatSnackBarModule

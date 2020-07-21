@@ -1,8 +1,8 @@
 import { Component, OnDestroy } from '@angular/core';
 import { participants } from '../participants.mock';
-import { Subject, Observable, of, zip } from 'rxjs';
-import { UserService, UserPublicData, UserPersonalData } from '../user.service';
-import { switchMap, distinctUntilChanged, map, withLatestFrom, first, startWith, takeUntil } from 'rxjs/operators';
+import { Subject, Observable, of } from 'rxjs';
+import { UserService, UserPublicData } from '../user.service';
+import { switchMap, distinctUntilChanged, map, withLatestFrom, first, startWith } from 'rxjs/operators';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Participant, HasId } from './participant.model';
 import { ActivatedRoute, Router } from '@angular/router';

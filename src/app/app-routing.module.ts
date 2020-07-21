@@ -11,6 +11,7 @@ import { map } from 'rxjs/operators';
 import { User } from 'firebase/app';
 import { PrivacyComponent } from './privacy/privacy.component';
 import { TermsOfServcieComponent } from './terms-of-servcie/terms-of-servcie.component';
+import { StageResultsComponent } from './stage-results/stage-results.component';
 
 const mustBeLoggedIn = () => map((user: User) => Boolean(user) || ['/'])
 
@@ -19,6 +20,7 @@ const routes: Routes = [
   {
     path: 'stage/:year/:id', component: StageComponent, children: [
       {path: 'participants', component: ParticipantsComponent},
+      {path: 'results', component: StageResultsComponent},
     ]
   },
   { path: 'regulations', component: RegulationsComponent },

@@ -15,3 +15,9 @@
     object-fit: cover;
   }
 }
+.set {
+  position: absolute;
+  left: 20em;
+  display: flex;
+  justify-content: space-between;
+}
