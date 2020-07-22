@@ -1,5 +1,11 @@
 @import '../../colors.scss';
 
+a {
+  color: $grey;
+  margin: 1em 0 0;
+  display: inline-block;
+}
+
 h2 {
   padding-top: 2em;
   padding-bottom: 0em;
@@ -11,26 +17,37 @@ h2 {
     color: $dark-grey;
   }
   th, td {
-    padding-top: 0.5em;
+    padding: 0.25em 0.5em;
     text-align: center;
-    padding-right: 1em;
+    
+  }
+  td {
+    white-space: nowrap;
+  }
+  tr{
+    td:nth-child(5), th:nth-child(5), td:nth-child(8), th:nth-child(8), td:nth-child(11), th:nth-child(11) {
+      border-left: 2px solid;
+    }
   }
 }
 .openClass {
   h2 { color: $prime; }
   tr:nth-child(2) { background-color: unquote($prime + "80"); }
-  tr:nth-child(3) { background-color: unquote($prime + "4D"); }
-  tr:nth-child(4) { background-color: unquote($prime + "33"); }
+  tr:nth-child(3) { background-color: unquote($prime + "4D"); font-weight: bold; color: $dark-grey;}
+  tr:nth-child(4) { background-color: unquote($prime + "25"); font-weight: bold; color: $dark-grey;}
+  tr:nth-child(5) { background-color: unquote($prime + "15"); font-weight: bold; color: $dark-grey;}
 }
 .standardClass {
   h2 { color: $success; }
   tr:nth-child(2) { background-color: unquote($success + "80"); }
-  tr:nth-child(3) { background-color: unquote($success + "4D"); }
-  tr:nth-child(4) { background-color: unquote($success + "33"); }
+  tr:nth-child(3) { background-color: unquote($success + "4D"); font-weight: bold; color: $dark-grey;}
+  tr:nth-child(4) { background-color: unquote($success + "25"); font-weight: bold; color: $dark-grey;}
+  tr:nth-child(5) { background-color: unquote($success + "15"); font-weight: bold; color: $dark-grey;}
 }
 .womenClass {
   h2 { color: $accent; }
   tr:nth-child(2) { background-color: unquote($accent + "80"); }
-  tr:nth-child(3) { background-color: unquote($accent + "4D"); }
-  tr:nth-child(4) { background-color: unquote($accent + "33"); }
+  tr:nth-child(3) { background-color: unquote($accent + "4D"); font-weight: bold; color: $dark-grey;}
+  tr:nth-child(4) { background-color: unquote($accent + "25"); font-weight: bold; color: $dark-grey;}
+  tr:nth-child(5) { background-color: unquote($accent + "15"); font-weight: bold; color: $dark-grey;}
 }

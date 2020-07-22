@@ -4,88 +4,148 @@ import { Participant, HasId } from '../participants/participant.model';
 import { ActivatedRoute } from '@angular/router';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { UserService, UserPublicData } from '../user.service';
-import { distinctUntilChanged, switchMap, first, map, filter } from 'rxjs/operators';
-import { fill } from 'lodash-es';
-import { ParticipantsComponent } from '../participants/participants.component';
+import { distinctUntilChanged, switchMap, first, map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-stage-results',
   template: `
+
+<a target="_blank" href="https://paragliding.lv/uploads/Rezultati_Prezidenta_kauss_2020.3.pdf">Rezultāti [pdf]</a>
 <div class="openClass">
   <h2>Open KLASE</h2>
   <table class="results "  cellspacing="0" cellpadding="0">
-    <tr>
-      <th>Vieta</th>
-      <th>Reģ. Nr.</th>
-      <th>Vārds</th>
-      <th>Spārna klase</th>
-      <th>Punkti</th>
-      <th>Distance</th>
-      <th>Max. Augstums</th>
-      <th>Starts SS</th>
-  
-    </tr>
+  <thead>
+  <th></th>
+  <th></th>
+  <th></th>
+  <th></th>
+  <th colspan="3">1. uzdevums</th>
+  <th colspan="3">2. uzdevums</th>
+  <th>Kopvērtējums</th>
+</thead>
+<tr>
+  <th>Vieta</th>
+  <th>Reģ. Nr.</th>
+  <th>Vārds</th>
+  <th>Spārna klase</th>
+
+  <th>Punkti</th>
+  <th>Distance</th>
+  <th>Ātrums</th>
+
+  <th>Punkti</th>
+  <th>Distance</th>
+  <th>Ātrums</th>
+
+  <th>Punkti</th>
+
+</tr>
     <tr *ngFor="let p of userList$ | async; let i = index; trackBy: trackById">
     <td>{{i+1}}.</td>
     <td>{{p.registrationNumber}}</td>
     <td>{{p.name}} {{p.surname}}</td>
-    <td>{{p.wingClass}}</td>
+    <td>{{p.wingClass | uppercase}}</td>
+
+    <td>{{p.tasks[0].score}}</td>
+    <td>{{p.tasks[0].distance}}</td>
+    <td>{{p.tasks[0].speed}}</td>
+
+    <td>{{p.tasks[1].score}}</td>
+    <td>{{p.tasks[1].distance}}</td>
+    <td>{{p.tasks[1].speed}}</td>
     <td>{{p.score}}</td>
-    <td>{{p.distance}}</td>
-    <td>{{p.maxHeight}}</td>
-    <td>{{p.start}}</td>
     </tr>
   </table>
 </div>
 <div class="standardClass">
 <h2>Standarta KLASE</h2>
   <table class="results"  cellspacing="0" cellpadding="0">
+    <thead>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th colspan="3">1. uzdevums</th>
+      <th colspan="3">2. uzdevums</th>
+      <th>Kopvērtējums</th>
+    </thead>
     <tr>
       <th>Vieta</th>
       <th>Reģ. Nr.</th>
       <th>Vārds</th>
       <th>Spārna klase</th>
+
       <th>Punkti</th>
       <th>Distance</th>
-      <th>Max. Augstums</th>
-      <th>Starts SS</th>
+      <th>Ātrums</th>
+
+      <th>Punkti</th>
+      <th>Distance</th>
+      <th>Ātrums</th>
+
+      <th>Punkti</th>
   
     </tr>
     <tr *ngFor="let p of standartScores$ | async; let i = index; trackBy: trackById">
     <td>{{i+1}}.</td>
     <td>{{p.registrationNumber}}</td>
     <td>{{p.name}} {{p.surname}}</td>
-    <td>{{p.wingClass}}</td>
+    <td>{{p.wingClass | uppercase}}</td>
+
+    <td>{{p.tasks[0].score}}</td>
+    <td>{{p.tasks[0].distance}}</td>
+    <td>{{p.tasks[0].speed}}</td>
+
+    <td>{{p.tasks[1].score}}</td>
+    <td>{{p.tasks[1].distance}}</td>
+    <td>{{p.tasks[1].speed}}</td>
     <td>{{p.score}}</td>
-    <td>{{p.distance}}</td>
-    <td>{{p.maxHeight}}</td>
-    <td>{{p.start}}</td>
     </tr>
   </table>
 </div>
 <div class="womenClass">
   <h2>Sieviešu ieskaite</h2>
   <table class="results" cellspacing="0" cellpadding="0">
-    <tr>
-      <th>Vieta</th>
-      <th>Reģ. Nr.</th>
-      <th>Vārds</th>
-      <th>Spārna klase</th>
-      <th>Punkti</th>
-      <th>Distance</th>
-      <th>Max. Augstums</th>
-      <th>Starts SS</th>
+  <thead>
+    <th></th>
+    <th></th>
+    <th></th>
+    <th></th>
+    <th colspan="3">1. uzdevums</th>
+    <th colspan="3">2. uzdevums</th>
+    <th>Kopvērtējums</th>
+  </thead>
+  <tr>
+    <th>Vieta</th>
+    <th>Reģ. Nr.</th>
+    <th>Vārds</th>
+    <th>Spārna klase</th>
   
-    </tr>
+    <th>Punkti</th>
+    <th>Distance</th>
+    <th>Ātrums</th>
+  
+    <th>Punkti</th>
+    <th>Distance</th>
+    <th>Ātrums</th>
+  
+    <th>Punkti</th>
+  
+  </tr>
     <tr *ngFor="let p of womenScores$ | async;  let i = index; trackBy: trackById">
     <td>{{i+1}}.</td>
     <td>{{p.registrationNumber}}</td>
     <td>{{p.name}} {{p.surname}}</td>
-    <td>{{p.wingClass}}</td>
+    <td>{{p.wingClass | uppercase}}</td>
+
+    <td>{{p.tasks[0].score}}</td>
+    <td>{{p.tasks[0].distance}}</td>
+    <td>{{p.tasks[0].speed}}</td>
+
+    <td>{{p.tasks[1].score}}</td>
+    <td>{{p.tasks[1].distance}}</td>
+    <td>{{p.tasks[1].speed}}</td>
     <td>{{p.score}}</td>
-    <td>{{p.distance}}</td>
-    <td>{{p.maxHeight}}</td>
-    <td>{{p.start}}</td>
     </tr>
   </table>
 </div>
@@ -122,6 +182,10 @@ export class StageResultsComponent implements OnInit {
   standartScores$ = this.userList$.pipe(map((users) => users.filter(u => u.wingClass === 'B')))
 
   ngOnInit() {
+  }
+
+  trackById(_index: number, { id }: HasId) {
+    return id;
   }
 
 }

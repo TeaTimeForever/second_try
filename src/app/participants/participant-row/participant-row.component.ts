@@ -4,7 +4,7 @@ import { Observable, Subject, of } from 'rxjs';
 import { UserPublicData, UserService } from 'src/app/user.service';
 import { map } from 'rxjs/operators';
 import { ActivatedRoute } from '@angular/router';
-import { Participant } from '../participant.model';
+import { Participant, Task } from '../participant.model';
 
 @Component({
   selector: '[app-participant-row]',
@@ -16,15 +16,27 @@ import { Participant } from '../participant.model';
           src="./assets/cloud-off.png"
           alt="Atteikties">
     </div>
-    <div class="set" *ngIf="false && userService.isAdmin$ | async">
-      <div>DNS<input type="checkbox" placeholder="dns" [(ngModel)]="update.dns"/></div>
-      <input *ngIf="!update.dns" type="number" placeholder="Reģ. Nr." [(ngModel)]="update.registrationNumber" />
-      <input *ngIf="!update.dns" type="number" placeholder="Punkti" [(ngModel)]="update.score"/>
-      <input *ngIf="!update.dns" type="number" placeholder="Distance" [(ngModel)]="update.distance"/>
-      <input *ngIf="!update.dns" type="number" placeholder="Max. Augstums" [(ngModel)]="update.maxHeight"/>
-      <input *ngIf="!update.dns" type="text" placeholder="Starts SS" [(ngModel)]="update.start"/>
+    <!--div class="set" *ngIf="false && userService.isAdmin$ | async">
+      <input type="number" placeholder="Reģ. Nr." [(ngModel)]="update!.registrationNumber" />
+      <input type="number" placeholder="score" [(ngModel)]="update!.score"/>
+    <span>punkti</span>
+      <input type="number" placeholder="Punkti-1" [(ngModel)]="update!.tasks[0]!.score"/>
+      <input type="number" placeholder="Punkti-2" [(ngModel)]="update!.tasks[1]!.score"/>
+      
+    <span>task1: </span>
+      <input type="number" placeholder="Distance-1" [(ngModel)]="update!.tasks[0]!.distance"/>
+      <input type="number" placeholder="Max. Augstums-1" [(ngModel)]="update!.tasks[0]!.maxHeight"/>
+      <input type="text" placeholder="Starts SS-1" [(ngModel)]="update!.tasks[0]!.start"/>
+      <input type="text" placeholder="Fin SS-1" [(ngModel)]="update!.tasks[0]!.finish"/>
+      <input type="number" placeholder="Speed-1" [(ngModel)]="update!.tasks[0]!.speed"/>
+    <span>task2: </span>
+      <input type="number" placeholder="Distance-2" [(ngModel)]="update!.tasks[1].distance"/>
+      <input type="number" placeholder="Max. Augstums-2" [(ngModel)]="update!.tasks[1].maxHeight"/>
+      <input type="text" placeholder="Starts SS-2" [(ngModel)]="update!.tasks[1].start"/>
+      <input type="text" placeholder="Finish SS-2" [(ngModel)]="update!.tasks[1].finish"/>
+      <input type="number" placeholder="Speed-2" [(ngModel)]="update!.tasks[1].speed"/>
       <button (click)="updateParticipant()">save</button>
-    </div>
+    </div-->
   `,
   styleUrls: ['./participant-row.component copy.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
@@ -41,14 +53,16 @@ export class ParticipantRowComponent implements OnInit {
     private activatedRoute: ActivatedRoute) { }
 
   userId$ = this.userService.user$.pipe(map(user => user? user.uid : ''))
-  update = {}
+  update = {
+    tasks: [{} as Task, {} as Task]
+  } as Participant;
   ngOnInit() {
     this.participant$ = this.afs.doc<UserPublicData>(`users/${this.participantId!}`).valueChanges()
   }
 
-  updateParticipant() {
-    const yearAndStageId = this.activatedRoute.snapshot.parent!.params;
-    this.afs.doc<Participant>(`years/${yearAndStageId.year}/stages/${yearAndStageId.id}/participants/${this.participantId}`).update(this.update);
-  }
+  // updateParticipant() {
+  //   const yearAndStageId = this.activatedRoute.snapshot.parent!.params;
+  //   this.afs.doc<Participant>(`years/${yearAndStageId.year}/stages/${yearAndStageId.id}/participants/${this.participantId}`).update(this.update);
+  // }
 
 }

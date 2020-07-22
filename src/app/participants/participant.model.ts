@@ -5,11 +5,16 @@ export interface Participant {
   cancelled?: boolean;
 
   score?: number;
-  distance?: string;
+  tasks?: Task[],
+  registrationNumber?: number;
+}
+export interface Task {
+  score?: number;
+  distance?: number;
+  speed?: number;
   maxHeight?: number;
   start?: string;
-  dns?: boolean;
-  registrationNumber?: number;
+  finish?: string;
 }
 
 export interface HasId {

@@ -20,4 +20,7 @@
   left: 20em;
   display: flex;
   justify-content: space-between;
+  input[type=number], input[type=text] {
+    width: 60px;
+  }
 }
