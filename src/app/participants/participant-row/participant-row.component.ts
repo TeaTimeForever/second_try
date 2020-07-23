@@ -16,7 +16,7 @@ import { Participant, Task } from '../participant.model';
           src="./assets/cloud-off.png"
           alt="Atteikties">
     </div>
-    <!--div class="set" *ngIf="false && userService.isAdmin$ | async">
+    <!--div class="set" *ngIf="userService.isAdmin$ | async">
       <input type="number" placeholder="Reģ. Nr." [(ngModel)]="update!.registrationNumber" />
       <input type="number" placeholder="score" [(ngModel)]="update!.score"/>
     <span>punkti</span>
@@ -36,7 +36,7 @@ import { Participant, Task } from '../participant.model';
       <input type="text" placeholder="Finish SS-2" [(ngModel)]="update!.tasks[1].finish"/>
       <input type="number" placeholder="Speed-2" [(ngModel)]="update!.tasks[1].speed"/>
       <button (click)="updateParticipant()">save</button>
-    </div-->
+    </!--div-->
   `,
   styleUrls: ['./participant-row.component copy.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush

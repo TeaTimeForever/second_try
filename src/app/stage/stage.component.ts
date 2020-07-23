@@ -10,6 +10,7 @@ import { Stage } from './stage.model';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { firestore } from 'firebase/app';
 import { MapLoaderOptions } from '@googlemaps/map-loader/dist/map-loader';
+import { UserService } from '../user.service';
 
 const mapLoader = new GoogleMap();
 const mapLoaderOptions: MapLoaderOptions = {
@@ -49,7 +50,7 @@ const mapLoaderOptions: MapLoaderOptions = {
          routerLinkActive="active-link"
          [routerLinkActiveOptions]="{exact:true  }">#info</a> 
       <a routerLink="participants" routerLinkActive="active-link" *ngIf="stage.status !=='cancelled'" >#dalībnieki</a>
-      <a routerLink="results" routerLinkActive="active-link" *ngIf="stage.status ==='finished'" >#rezultāti</a>
+      <a routerLink="results" routerLinkActive="active-link" *ngIf="stage.status ==='finished' && userService.isAdmin$ | async" >#rezultāti</a>
       <div *ngIf="stage.status ==='ongoing'" class="registration" routerLink="participants">Notiek reģistrācija</div>
       <div *ngIf="stage.status ==='cancelled'" class="cancelled">Atcelts</div>
     </div>
@@ -115,7 +116,8 @@ export class StageComponent implements OnInit, OnDestroy {
   constructor(private activeRoute: ActivatedRoute,
     private stageService: StageService,
     private afs: AngularFirestore,
-    private sanitizer: DomSanitizer) { }
+    private sanitizer: DomSanitizer,
+    public userService: UserService) { }
 
   id?: string;
   description?: Promise<SafeHtml>;
