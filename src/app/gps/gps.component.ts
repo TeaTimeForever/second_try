@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { GhostService } from '../ghost.service';
+import { AngularFireStorage } from '@angular/fire/storage';
 
 @Component({
   selector: 'app-gps',
@@ -26,9 +27,12 @@ import { GhostService } from '../ghost.service';
 export class GpsComponent implements OnInit {
 
   gpsPage$ = this.stageService.getPage('par-gps-lv');
-  constructor(private stageService: GhostService) { }
+  constructor(
+    private stageService: GhostService,
+    private storage: AngularFireStorage) { }
 
   ngOnInit() {
+    // this.storage.ref('map')
   }
 
 }

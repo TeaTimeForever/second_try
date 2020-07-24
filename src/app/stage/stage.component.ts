@@ -101,8 +101,8 @@ export class StageComponent implements OnInit, OnDestroy {
     )
   );
 
-  private stagePost$ = this.stage$.pipe(
-    switchMap(stage => this.stageService.getStageDescription(stage.id)),
+  private stagePost$ = this.yearAndStageId$.pipe(
+    switchMap(({ year, id }) => this.stageService.getStageDescription(year, id)),
     share()
   );
 

@@ -16,8 +16,8 @@ export class GhostService {
     version: 'v2'
   });
 
-  getStageDescription(id: string) {
-    return this.api.posts.read({ slug: `2020-posms-${id}` }, { formats: ['html', 'plaintext'] });
+  getStageDescription(year: string, id: string) {
+    return this.api.posts.read({ slug: `${year}-posms-${id}` }, { formats: ['html', 'plaintext'] });
   }
 
   getPage(slug: string) {
