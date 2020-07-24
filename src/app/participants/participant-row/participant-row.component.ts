@@ -11,7 +11,7 @@ import { Participant, Task } from '../participant.model';
   template: `
     <span *ngIf="participant$ | async as p">{{p.name}} {{p.surname}}</span>
     <div *ngIf="userId$ | async as uId" class="manage-registration">
-      <img *ngIf="participantId === uId"
+      <img *ngIf="false"
           (click)="removeUser.next()"
           src="./assets/cloud-off.png"
           alt="Atteikties">
@@ -64,5 +64,6 @@ export class ParticipantRowComponent implements OnInit {
   //   const yearAndStageId = this.activatedRoute.snapshot.parent!.params;
   //   this.afs.doc<Participant>(`years/${yearAndStageId.year}/stages/${yearAndStageId.id}/participants/${this.participantId}`).update(this.update);
   // }
+
 
 }

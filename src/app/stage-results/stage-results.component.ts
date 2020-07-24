@@ -31,11 +31,11 @@ import { distinctUntilChanged, switchMap, first, map } from 'rxjs/operators';
   <th>Spārna klase</th>
 
   <th>Punkti</th>
-  <th>Distance</th>
+  <th>Distance (km)</th>
   <th>Ātrums (km/h)</th>
 
   <th>Punkti</th>
-  <th>Distance</th>
+  <th>Distance (km)</th>
   <th>Ātrums (km/h)</th>
 
   <th>Punkti</th>
@@ -78,12 +78,12 @@ import { distinctUntilChanged, switchMap, first, map } from 'rxjs/operators';
       <th>Spārna klase</th>
 
       <th>Punkti</th>
-      <th>Distance</th>
-      <th>Ātrums</th>
+      <th>Distance (km)</th>
+      <th>Ātrums (km/h)</th>
 
       <th>Punkti</th>
-      <th>Distance</th>
-      <th>Ātrums</th>
+      <th>Distance (km)</th>
+      <th>Ātrums (km/h)</th>
 
       <th>Punkti</th>
   
@@ -124,12 +124,12 @@ import { distinctUntilChanged, switchMap, first, map } from 'rxjs/operators';
     <th>Spārna klase</th>
   
     <th>Punkti</th>
-    <th>Distance</th>
-    <th>Ātrums</th>
+    <th>Distance (km)</th>
+    <th>Ātrums (km/h)</th>
   
     <th>Punkti</th>
-    <th>Distance</th>
-    <th>Ātrums</th>
+    <th>Distance (km)</th>
+    <th>Ātrums (km/h)</th>
   
     <th>Punkti</th>
   
