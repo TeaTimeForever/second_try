@@ -1,0 +1,18 @@
+@import '../../colors.scss';
+
+.stage-content {
+  margin: 0 1em;
+  .container {
+    max-width: 860px;
+    .post {
+      padding: 2em 1em;
+      background-color: $white-grey;
+      ::ng-deep li {
+        margin-top: 1em;
+      }
+    }
+    .map {
+      overflow: hidden;
+    }
+  }
+}

@@ -12,7 +12,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
     <a class="nav-brand" href=""><img src="./assets/XClogo.png"/></a>
     <div class="middle">
       <a [routerLink]="['/regulations']"  routerLinkActive="active-link">Nolikums</a>
-      <!--a [routerLink]="['/controlpoints']"  routerLinkActive="active-link">Kontrolpunkti</a-->
+      <a [routerLink]="['/gps']"  routerLinkActive="active-link">Par GPS</a>
       <a [routerLink]="['/stage', 2020, 6]"  routerLinkActive="active-link">Sacensību sezona</a>
       <!--a [routerLink]="['/organisators']"  routerLinkActive="active-link">Organizatori</a-->
     </div>

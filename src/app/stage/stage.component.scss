@@ -1,6 +1,9 @@
 @import '../../colors.scss';
 .stage-content {
   margin: 0 1em;
+  .container {
+    max-width: 860px;
+  }
   .stages {
     margin-top: 1em;
     padding: 0;
@@ -107,9 +110,7 @@
       }
     }
   }
-  .container {
-    max-width: 860px;
-  }
+
 }
 #google_map {
   width: 300px;

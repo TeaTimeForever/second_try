@@ -22,6 +22,7 @@ import { LoginOptionsDialogComponent } from './login-options-dialog/login-option
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { StageResultsComponent } from './stage-results/stage-results.component';
 import { AngularFireStorageModule } from '@angular/fire/storage';
+import { GpsComponent } from './gps/gps.component';
 
 @NgModule({
   declarations: [
@@ -35,7 +36,8 @@ import { AngularFireStorageModule } from '@angular/fire/storage';
     TermsOfServcieComponent,
     ParticipantRowComponent,
     LoginOptionsDialogComponent,
-    StageResultsComponent
+    StageResultsComponent,
+    GpsComponent
   ],
   imports: [
     BrowserModule,

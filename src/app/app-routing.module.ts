@@ -12,6 +12,7 @@ import { User } from 'firebase/app';
 import { PrivacyComponent } from './privacy/privacy.component';
 import { TermsOfServcieComponent } from './terms-of-servcie/terms-of-servcie.component';
 import { StageResultsComponent } from './stage-results/stage-results.component';
+import { GpsComponent } from './gps/gps.component';
 
 const mustBeLoggedIn = () => map((user: User) => Boolean(user) || ['/'])
 
@@ -24,6 +25,7 @@ const routes: Routes = [
     ]
   },
   { path: 'regulations', component: RegulationsComponent },
+  { path: 'gps', component: GpsComponent },
   { path: 'privacypolicy', component: PrivacyComponent },
   { path: 'termsofservice', component: TermsOfServcieComponent },
   { path: 'personal', component: UserProfileComponent, canActivate: [AngularFireAuthGuard], data: { authGuardPipe: mustBeLoggedIn } }
