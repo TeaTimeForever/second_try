@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { StageService } from '../stage.service';
+import { GhostService } from '../ghost.service';
 
 @Component({
   selector: 'app-gps',
@@ -17,7 +17,7 @@ import { StageService } from '../stage.service';
           marginwidth="0"
           style="margin-top: -55px;"></iframe>
       </div>
-      <div class="post" [innerHtml]="gpsPage$ | async"></div>
+      <div class="post" [innerHtml]="(gpsPage$ | async)?.html"></div>
     </div>
   </div>
   `,
@@ -25,11 +25,8 @@ import { StageService } from '../stage.service';
 })
 export class GpsComponent implements OnInit {
 
-  gpsPage$ = this.stageService.getGPSPage();
-    
-  constructor(private stageService: StageService) { }
-
-  
+  gpsPage$ = this.stageService.getPage('par-gps-lv');
+  constructor(private stageService: GhostService) { }
 
   ngOnInit() {
   }

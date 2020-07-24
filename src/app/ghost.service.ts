@@ -6,7 +6,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 @Injectable({
   providedIn: 'root'
 })
-export class StageService {
+export class GhostService {
 
   constructor(private sanitizer: DomSanitizer) { }
 
@@ -20,13 +20,11 @@ export class StageService {
     return this.api.posts.read({ slug: `2020-posms-${id}` }, { formats: ['html', 'plaintext'] });
   }
 
-  getRegulationsPage() {
-    return this.api.pages.read({slug: `2020-gada-nolikums`}, {formats: ['html', 'plaintext']});
-  }
-
-  getGPSPage() {
-    return this.api.pages.read({slug: `par-gps-lv`}, {formats: ['html', 'plaintext']})
-    .then(res => res.html)
-    .then(res => this.sanitizer.bypassSecurityTrustHtml(res as string));
+  getPage(slug: string) {
+    return this.api.pages.read({slug}, {formats: ['html', 'plaintext']})
+    .then(res => ({
+      title: res.title,
+      html: this.sanitizer.bypassSecurityTrustHtml(res.html as string)
+    }))
   }
 }

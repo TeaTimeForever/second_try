@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Subject, Observable, combineLatest } from 'rxjs';
 import { map, switchMap, distinctUntilChanged, filter, share, pluck, takeUntil, first } from 'rxjs/operators';
-import { StageService } from '../stage.service';
+import { GhostService } from '../ghost.service';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { environment } from 'src/environments/environment';
 import { GoogleMap } from '@googlemaps/map-loader';
@@ -114,7 +114,7 @@ export class StageComponent implements OnInit, OnDestroy {
   title$ = this.stagePost$.pipe(pluck('title'));
 
   constructor(private activeRoute: ActivatedRoute,
-    private stageService: StageService,
+    private stageService: GhostService,
     private afs: AngularFirestore,
     private sanitizer: DomSanitizer,
     public userService: UserService) { }

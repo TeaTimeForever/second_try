@@ -1,12 +1,12 @@
 import { TestBed } from '@angular/core/testing';
 
-import { StageService } from './stage.service';
+import { GhostService } from './ghost.service';
 
-describe('StageService', () => {
+describe('GhostService', () => {
   beforeEach(() => TestBed.configureTestingModule({}));
 
   it('should be created', () => {
-    const service: StageService = TestBed.get(StageService);
+    const service: GhostService = TestBed.get(GhostService);
     expect(service).toBeTruthy();
   });
 });
