@@ -185,7 +185,7 @@ export class StageResultsComponent implements OnInit {
   );
 
   womenScores$ = this.userList$.pipe(map((users) => users.filter(u => u.gender === 'F')))
-  standartScores$ = this.userList$.pipe(map((users) => users.filter(u => u.wingClass === 'B')))
+  standartScores$ = this.userList$.pipe(map((users) => users.filter(u => u.wingClass === 'B' || u.wingClass === 'A')))
 
   ngOnInit() {
   }

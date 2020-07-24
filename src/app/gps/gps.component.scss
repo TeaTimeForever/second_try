@@ -14,5 +14,12 @@
     .map {
       overflow: hidden;
     }
+    .points {
+      a {
+        display: inline-block;
+        color: $dark-grey;
+        margin: 0.25em;
+      }
+    }
   }
 }
