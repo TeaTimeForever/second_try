@@ -21,6 +21,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { LoginOptionsDialogComponent } from './login-options-dialog/login-options-dialog.component';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { StageResultsComponent } from './stage-results/stage-results.component';
+import { AngularFireStorageModule } from '@angular/fire/storage';
 
 @NgModule({
   declarations: [
@@ -45,6 +46,7 @@ import { StageResultsComponent } from './stage-results/stage-results.component';
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireAuthModule,
     AngularFirestoreModule.enablePersistence(),
+    AngularFireStorageModule,
     NoopAnimationsModule,
     MatDialogModule,
     MatSnackBarModule

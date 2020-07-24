@@ -15,6 +15,7 @@ export interface Task {
   maxHeight?: number;
   start?: string;
   finish?: string;
+  penalty?: number;
 }
 
 export interface HasId {
