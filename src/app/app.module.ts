@@ -23,6 +23,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { StageResultsComponent } from './stage-results/stage-results.component';
 import { AngularFireStorageModule } from '@angular/fire/storage';
 import { GpsComponent } from './gps/gps.component';
+import { ResultTableComponent } from './result-table/result-table.component';
 
 @NgModule({
   declarations: [
@@ -37,7 +38,8 @@ import { GpsComponent } from './gps/gps.component';
     ParticipantRowComponent,
     LoginOptionsDialogComponent,
     StageResultsComponent,
-    GpsComponent
+    GpsComponent,
+    ResultTableComponent
   ],
   imports: [
     BrowserModule,

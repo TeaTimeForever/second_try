@@ -1,0 +1,28 @@
+@import '../../colors.scss';
+h2 {
+  padding-top: 2em;
+  padding-bottom: 0em;
+}
+.penalty-description {
+  color: $grey;
+}
+.results {
+  border: 0;
+  margin-bottom: 1em;
+  th {
+    color: $dark-grey;
+  }
+  th, td {
+    padding: 0.25em 0.5em;
+    text-align: center;
+    
+  }
+  td {
+    white-space: nowrap;
+  }
+  tr{
+    td:nth-child(5), th:nth-child(5), td:nth-child(8), th:nth-child(8), td:nth-child(11), th:nth-child(11) {
+      border-left: 2px solid;
+    }
+  }
+}
