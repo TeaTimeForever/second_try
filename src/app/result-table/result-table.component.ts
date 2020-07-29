@@ -61,7 +61,7 @@ export class ResultTableComponent implements OnInit {
   @Input() title?: string;
   @Input() color?: string;
   @Input() participants$?: Observable<Array<Participant & HasId>>;
-  @Input() tasksIds = [0, 1];
+  @Input() tasksIds = [0, 1]; // TODO: Should be provided
   penaltyNoteIsVisible$?: Observable<boolean>;
   
   constructor() { }
