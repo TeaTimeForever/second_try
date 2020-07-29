@@ -5,7 +5,6 @@ import { Subject, zip, Observable } from 'rxjs';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { takeUntil, map, switchMap, distinctUntilChanged, debounceTime, withLatestFrom, filter, catchError, tap } from 'rxjs/operators';
 import { ActivatedRoute, Router } from '@angular/router';
-import { isEqual } from 'lodash-es'
 import { UserService, UserPublicData, UserPersonalData } from '../user.service';
 import { Participant } from '../participants/participant.model';
 
@@ -148,14 +147,14 @@ export class UserProfileComponent implements OnInit, OnDestroy {
     filter(() => this.form.valid),
     map(UserService.extractPublicData),
     debounceTime(2000),
-    distinctUntilChanged(isEqual),
+    distinctUntilChanged((x, y) => JSON.stringify(x) === JSON.stringify(y)),
   );
   privateDataChanges: Observable<UserPersonalData> = this.form.valueChanges.pipe(
     takeUntil(this.unsubscribe$),
     filter(() => this.form.valid),
     map(UserService.extractPersonalData),
     debounceTime(2000),
-    distinctUntilChanged(isEqual),
+    distinctUntilChanged((x, y) => JSON.stringify(x) === JSON.stringify(y)),
   );
 
   ngOnInit() {
