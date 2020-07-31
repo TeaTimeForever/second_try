@@ -13,6 +13,8 @@ import { PrivacyComponent } from './privacy/privacy.component';
 import { TermsOfServcieComponent } from './terms-of-servcie/terms-of-servcie.component';
 import { StageResultsComponent } from './stage-results/stage-results.component';
 import { GpsComponent } from './gps/gps.component';
+import { AdminResultsFormComponent } from './admin-results-form/admin-results-form.component';
+import { IsAdminGuard } from './is-admin.guard';
 
 const mustBeLoggedIn = () => map((user: User) => Boolean(user) || ['/'])
 
@@ -22,6 +24,7 @@ const routes: Routes = [
     path: 'stage/:year/:id', component: StageComponent, children: [
       {path: 'participants', component: ParticipantsComponent},
       {path: 'results', component: StageResultsComponent},
+      {path: 'add-results', component: AdminResultsFormComponent, canActivate: [IsAdminGuard]},
     ]
   },
   { path: 'regulations', component: RegulationsComponent },

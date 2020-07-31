@@ -20,10 +20,17 @@ type JoinPurpose = 'login' | 'register' | 'join' | 'leave';
                  (deactivate)="participantFormVisible=false"
                  style="display: none"></router-outlet>
   <div class="content" *ngIf="!participantFormVisible">
-  <ul><li app-participant-row *ngFor="let p of participantList$ | async; let i = index; trackBy: trackById"
-          [nr]="i+1"
-          [participantId]="p.id"
-          (removeUser)="removeParticipation$.next()"></li></ul>
+  <ul>
+    <li *ngFor="let p of participantList$ | async; let i = index; trackBy: trackById">
+      <span *ngIf="p | participantData | async as person">{{person.name}} {{person.surname}}</span>
+      <div *ngIf="userId$ | async as uId" class="manage-registration">
+        <img *ngIf="false"
+            (click)="removeParticipation$.next()"
+            src="./assets/cloud-off.png"
+            alt="Atteikties">
+      </div>
+    </li>
+  </ul>
   <div class="participate_option" *ngIf="joinButtonPurpose$ | async as purpose">
     <div class="good-luck" *ngIf="(joinButtonPurpose$ | async) === 'leave'">
       Jūs esat veikmīgi pieteicies uz sacensībam.
@@ -116,7 +123,6 @@ export class ParticipantsComponent implements OnDestroy {
   participants = participants;
 
   ngOnInit() {
-
     this.subscription$.add(
       this.removeParticipation$.pipe(
         withLatestFrom(this.yearAndStageId$, this.userService.user$))

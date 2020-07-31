@@ -51,6 +51,7 @@ const mapLoaderOptions: MapLoaderOptions = {
          [routerLinkActiveOptions]="{exact:true  }">#info</a> 
       <a routerLink="participants" routerLinkActive="active-link" *ngIf="stage.status !=='cancelled'" >#dalībnieki</a>
       <a routerLink="results" routerLinkActive="active-link" *ngIf="stage.status ==='finished'" >#rezultāti</a>
+      <a routerLink="add-results" routerLinkActive="active-link" class="admin-only" *ngIf="userService.isAdmin$ | async" >#ievadit rezultātus</a>
       <div *ngIf="stage.status ==='ongoing'" class="registration" routerLink="participants">Notiek reģistrācija</div>
       <div *ngIf="stage.status ==='cancelled'" class="cancelled">Atcelts</div>
     </div>
@@ -123,6 +124,7 @@ export class StageComponent implements OnInit, OnDestroy {
   description?: Promise<SafeHtml>;
   title?: Promise<string>;
   stage?: Stage;
+
 
   map = this.stage$.pipe(first()).toPromise().then(() => mapLoader.initMap(mapLoaderOptions))
   marker = this.stage$.pipe(first()).toPromise().then(() => this.map.then(map => new google.maps.Marker({

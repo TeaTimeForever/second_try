@@ -1,0 +1,11 @@
+@import '../../../colors.scss';
+
+input {
+  &[type=number] {
+    width: 3.5em;
+  }
+  &[type=text] {
+    width: 4em;
+  }
+
+}

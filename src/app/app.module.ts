@@ -24,6 +24,8 @@ import { StageResultsComponent } from './stage-results/stage-results.component';
 import { AngularFireStorageModule } from '@angular/fire/storage';
 import { GpsComponent } from './gps/gps.component';
 import { ResultTableComponent } from './result-table/result-table.component';
+import { AdminResultsFormComponent } from './admin-results-form/admin-results-form.component';
+import { ParticipantPublicDataPipe } from './particpant-data.pipe';
 
 @NgModule({
   declarations: [
@@ -39,7 +41,9 @@ import { ResultTableComponent } from './result-table/result-table.component';
     LoginOptionsDialogComponent,
     StageResultsComponent,
     GpsComponent,
-    ResultTableComponent
+    ResultTableComponent,
+    AdminResultsFormComponent,
+    ParticipantPublicDataPipe
   ],
   imports: [
     BrowserModule,
