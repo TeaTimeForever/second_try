@@ -30,8 +30,11 @@ import { MatSnackBar } from '@angular/material/snack-bar';
     <router-outlet style="display: none"></router-outlet>
   </div>
   <footer>
-    <a href="privacypolicy">Privacy policy</a>
-    <a href="termsofservice">Terms of Service</a>
+    <div class="history"><a>2019</a></div>
+    <div>
+      <a href="privacypolicy">Privacy policy</a>
+      <a href="termsofservice">Terms of Service</a>
+    </div>
   </footer>
   `,
   styleUrls: ['./app.component.scss']

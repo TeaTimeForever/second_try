@@ -99,10 +99,15 @@
 footer {
   height: 50px;
   display: flex;
+  flex-flow: column;
   align-items: center;
   justify-content: space-evenly;
-  a {
-    font-size: 0.8em;
-    color: $grey;
+  div {
+    a {
+      font-size: 0.8em;
+      margin: 0.5em;
+      color: $grey;
+      cursor: pointer;
+    }
   }
 }

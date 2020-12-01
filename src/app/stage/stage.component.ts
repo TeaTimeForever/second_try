@@ -73,7 +73,7 @@ const mapLoaderOptions: MapLoaderOptions = {
             </tr>
             <tr>
               <td class="part">Datums</td>
-              <td>2020 g. 18., 19. jūlijs </td>
+              <td>{{stage.date}}</td>
             </tr>
             <tr>
               <td class="part">Vieta</td>

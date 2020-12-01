@@ -1,7 +1,6 @@
-import { Component, OnInit, ChangeDetectionStrategy, Input, Output, SimpleChange } from '@angular/core';
-import { Participant, Task, HasId } from '../participant.model';
+import { Component, OnInit, ChangeDetectionStrategy, Input } from '@angular/core';
+import { Participant, HasId } from '../participant.model';
 import { UserService } from 'src/app/user.service';
-import { participants } from 'src/app/participants.mock';
 
 @Component({
   selector: '[app-participant-row]',
