@@ -12,4 +12,5 @@ export interface Stage {
   /** The participation fee (price) */
   fee: string;
   retrieve: string;
+  tasksCount: number;
 }
